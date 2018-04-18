@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+
+
+<body>
+
+ <p>Whether auto-exposure (AE) is currently locked to its latest
+     calculated values.</p>
+ <p>When set to <code>true</code> (ON), the AE algorithm is locked to its latest parameters,
+     and will not change exposure settings until the lock is set to <code>false</code> (OFF).</p>
+ <p>Note that even when AE is locked, the flash may be fired if
+     the {@link CaptureRequest#CONTROL_AE_MODE android.control.aeMode} is ON_AUTO_FLASH /
+     ON_ALWAYS_FLASH / ON_AUTO_FLASH_REDEYE.</p>
+ <p>When {@link CaptureRequest#CONTROL_AE_EXPOSURE_COMPENSATION android.control.aeExposureCompensation} is changed, even if the AE lock
+     is ON, the camera device will still adjust its exposure value.</p>
+ <p>If AE precapture is triggered (see {@link CaptureRequest#CONTROL_AE_PRECAPTURE_TRIGGER android.control.aePrecaptureTrigger})
+     when AE is already locked, the camera device will not change the exposure time
+     ({@link CaptureRequest#SENSOR_EXPOSURE_TIME android.sensor.exposureTime}) and sensitivity ({@link CaptureRequest#SENSOR_SENSITIVITY android.sensor.sensitivity})
+     parameters. The flash may be fired if the {@link CaptureRequest#CONTROL_AE_MODE android.control.aeMode}
+     is ON_AUTO_FLASH/ON_AUTO_FLASH_REDEYE and the scene is too dark. If the
+     {@link CaptureRequest#CONTROL_AE_MODE android.control.aeMode} is ON_ALWAYS_FLASH, the scene may become overexposed.
+     Similarly, AE precapture trigger CANCEL has no effect when AE is already locked.</p>
+ <p>When an AE precapture sequence is triggered, AE unlock will not be able to unlock
+     the AE if AE is locked by the camera device internally during precapture metering
+     sequence In other words, submitting requests with AE unlock has no effect for an
+     ongoing precapture metering sequence. Otherwise, the precapture metering sequence
+     will never succeed in a sequence of preview requests where AE lock is always set
+     to <code>false</code>.</p>
+ <p>Since the camera device has a pipeline of in-flight requests, the settings that
+     get locked do not necessarily correspond to the settings that were present in the
+     latest capture result received from the camera device, since additional captures
+     and AE updates may have occurred even before the result was sent out. If an
+     application is switching between automatic and manual control and wishes to eliminate
+     any flicker during the switch, the following procedure is recommended:</p>
+ <ol>
+     <li>Starting in auto-AE mode:</li>
+     <li>Lock AE</li>
+     <li>Wait for the first result to be output that has the AE locked</li>
+     <li>Copy exposure settings from that result into a request, set the request to manual AE</li>
+     <li>Submit the capture request, proceed to run manual AE as desired.</li>
+     </ol>
+ <p>See {@link CaptureResult#CONTROL_AE_STATE android.control.aeState} for AE lock related state transition details.</p>
+ <p>This key is available on all devices.</p>
+
+ <p>@see CaptureRequest#CONTROL_AE_EXPOSURE_COMPENSATION</p>
+ <p>@see CaptureRequest#CONTROL_AE_MODE</p>
+ <p>@see CaptureRequest#CONTROL_AE_PRECAPTURE_TRIGGER</p>
+ <p>@see CaptureResult#CONTROL_AE_STATE</p>
+ <p>@see CaptureRequest#SENSOR_EXPOSURE_TIME</p>
+ <p>@see CaptureRequest#SENSOR_SENSITIVITY</p>
+
+</body>
+
+</html>
