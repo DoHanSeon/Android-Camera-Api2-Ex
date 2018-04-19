@@ -9,7 +9,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.hs.mycamera2.R;
-import com.example.hs.mycamera2.option2.CameraOption2;
+//import com.example.hs.mycamera2.option2.CameraOption2;
 
 import java.util.Arrays;
 import java.util.List;
@@ -56,7 +56,7 @@ class OptionAdapter extends RecyclerView.Adapter<OptionAdapter.OptionViewHolder>
     }
 
     public void refresh(String cameraId) {
-        availableKeys = CameraOption2.getInstance().getAvailableKeys(cameraId);
+//        availableKeys = CameraOption2.getInstance().getAvailableKeys(cameraId);
 
 
 

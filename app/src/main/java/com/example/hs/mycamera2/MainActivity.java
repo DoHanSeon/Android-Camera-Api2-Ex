@@ -37,6 +37,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.hs.mycamera2.camera_option.CameraOptionManager;
 import com.example.hs.mycamera2.option.OptionFragment;
 
 import java.io.File;
@@ -317,6 +318,7 @@ public class MainActivity extends AppCompatActivity {
             cameraId = manager.getCameraIdList()[0];
             CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
             StreamConfigurationMap map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+            CameraOptionManager.getInstance().initialize(cameraId);
             imageDimension = map.getOutputSizes(SurfaceTexture.class)[0];
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
