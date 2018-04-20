@@ -5,5 +5,5 @@ package com.example.hs.mycamera2.camera_option;
  */
 
 public enum OptionType {
-    SELECT, CHECK, SETTING_VALUE
+    SELECT, CHECK, SETTING_VALUE, SLIDE
 }

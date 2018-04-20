@@ -1,8 +1,10 @@
 package com.example.hs.mycamera2.camera_option.base_option;
 
 import android.hardware.camera2.CaptureRequest;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 
-import com.example.hs.mycamera2.camera_option.detail_option.DetailOption;
+import com.example.hs.mycamera2.camera_option.detail_option.SelectDetailOption;
 import com.example.hs.mycamera2.camera_option.OptionType;
 
 /**
@@ -37,8 +39,8 @@ public enum CheckOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.NONE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.NONE;
         }
     },
     CONTROL_AWB_LOCK {
@@ -68,17 +70,18 @@ public enum CheckOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.NONE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.NONE;
         }
     },
     CONTROL_ENABLE_ZSL {
         private CaptureRequest.Key<Boolean> key;
 
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public CaptureRequest.Key<?> getKey() {
             if (key == null) {
-                key = CaptureRequest.CONTROL_ENABLE_ZSL;
+//                key = CaptureRequest.CONTROL_ENABLE_ZSL;
             }
             return key;
         }
@@ -99,8 +102,8 @@ public enum CheckOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.NONE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.NONE;
         }
     },
     STATISTICS_HOT_PIXEL_MAP_MODE {
@@ -130,8 +133,8 @@ public enum CheckOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.NONE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.NONE;
         }
     },
     BLACK_LEVEL_LOCK {
@@ -161,8 +164,8 @@ public enum CheckOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.NONE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.NONE;
         }
     },
 

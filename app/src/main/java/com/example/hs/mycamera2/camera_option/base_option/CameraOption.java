@@ -2,7 +2,7 @@ package com.example.hs.mycamera2.camera_option.base_option;
 
 import android.hardware.camera2.CaptureRequest;
 
-import com.example.hs.mycamera2.camera_option.detail_option.DetailOption;
+import com.example.hs.mycamera2.camera_option.detail_option.CameraDetailOption;
 import com.example.hs.mycamera2.camera_option.OptionType;
 
 /**
@@ -15,7 +15,7 @@ public interface CameraOption {
 
     String getDisplayName();
     OptionType getOptionType();
-    DetailOption getDetailOption();
+    CameraDetailOption getDetailOption();
 
     //location is asset folder
     String getDescriptionFilePath();

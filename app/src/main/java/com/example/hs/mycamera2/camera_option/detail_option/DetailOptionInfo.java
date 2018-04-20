@@ -12,4 +12,12 @@ public class DetailOptionInfo<T> {
         this.value = value;
         this.displayName = displayName;
     }
+
+    public T getValue() {
+        return value;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
 }

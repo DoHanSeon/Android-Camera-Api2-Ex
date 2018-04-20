@@ -71,19 +71,19 @@
 //
 //
 //
-//        CameraAllOption.DetailOption detailOption = CameraAllOption.DetailOption.NONE;
+//        CameraAllOption.SelectDetailOption detailOption = CameraAllOption.SelectDetailOption.NONE;
 //        int[] availableIntValue = null;
 //
 //
 //        if (TextUtils.equals(name, CaptureRequest.BLACK_LEVEL_LOCK.getName())) {
 //            return new BooleanOption(key);
 //        } else if (TextUtils.equals(name, CaptureRequest.BLACK_LEVEL_LOCK.getName())) {
-//            detailOption = CameraAllOption.DetailOption.COLOR_CORRECTION_ABERRATION_MODE;
+//            detailOption = CameraAllOption.SelectDetailOption.COLOR_CORRECTION_ABERRATION_MODE;
 //            availableIntValue = character.get(CameraCharacteristics.COLOR_CORRECTION_AVAILABLE_ABERRATION_MODES);
 //        } else if (TextUtils.equals(name, CaptureRequest.COLOR_CORRECTION_MODE.getName())) {
 //            int hardwareLevel = character.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
 //            if (hardwareLevel == CameraMetadata.INFO_SUPPORTED_HARDWARE_LEVEL_FULL) {
-//                detailOption = CameraAllOption.DetailOption.COLOR_CORRECTION_MODE;
+//                detailOption = CameraAllOption.SelectDetailOption.COLOR_CORRECTION_MODE;
 //                availableIntValue = new int[] {
 //                        CameraMetadata.COLOR_CORRECTION_MODE_TRANSFORM_MATRIX,
 //                        CameraMetadata.COLOR_CORRECTION_MODE_FAST,
@@ -91,17 +91,17 @@
 //                };
 //            }
 //        } else if (TextUtils.equals(name, CaptureRequest.CONTROL_AE_ANTIBANDING_MODE.getName())) {
-//            detailOption = CameraAllOption.DetailOption.CONTROL_AE_ANTIBANDING_MODE;
+//            detailOption = CameraAllOption.SelectDetailOption.CONTROL_AE_ANTIBANDING_MODE;
 //            availableIntValue = character.get(CameraCharacteristics.CONTROL_AE_AVAILABLE_ANTIBANDING_MODES);
 //        } else if (TextUtils.equals(name, CaptureRequest.CONTROL_AE_EXPOSURE_COMPENSATION.getName())) {
 //            //TODO...
 //        } else if (TextUtils.equals(name, CaptureRequest.CONTROL_AE_MODE.getName())) {
-//            detailOption = CameraAllOption.DetailOption.CONTROL_AE_MODE;
+//            detailOption = CameraAllOption.SelectDetailOption.CONTROL_AE_MODE;
 //            availableIntValue = character.get(CameraCharacteristics.CONTROL_AE_AVAILABLE_MODES);
 //        } else if (TextUtils.equals(name, CaptureRequest.CONTROL_AE_PRECAPTURE_TRIGGER.getName())) {
 //            int hardwareLevel = character.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
 //            if (hardwareLevel == CameraMetadata.INFO_SUPPORTED_HARDWARE_LEVEL_LIMITED) {
-//                detailOption = CameraAllOption.DetailOption.CONTROL_AE_PRECAPTURE_TRIGGER;
+//                detailOption = CameraAllOption.SelectDetailOption.CONTROL_AE_PRECAPTURE_TRIGGER;
 //                availableIntValue = new int[] {
 //                        CameraMetadata.CONTROL_AE_PRECAPTURE_TRIGGER_IDLE,
 //                        CameraMetadata.CONTROL_AE_PRECAPTURE_TRIGGER_START,
@@ -109,10 +109,10 @@
 //                };
 //            }
 //        } else if (TextUtils.equals(name, CaptureRequest.CONTROL_AF_MODE.getName())) {
-//            detailOption = CameraAllOption.DetailOption.CONTROL_AF_MODE;
+//            detailOption = CameraAllOption.SelectDetailOption.CONTROL_AF_MODE;
 //            availableIntValue = character.get(CameraCharacteristics.CONTROL_AF_AVAILABLE_MODES);
 //        } else if (TextUtils.equals(name, CaptureRequest.CONTROL_AF_TRIGGER.getName())) {
-//            detailOption = CameraAllOption.DetailOption.CONTROL_AF_TRIGGER;
+//            detailOption = CameraAllOption.SelectDetailOption.CONTROL_AF_TRIGGER;
 //            availableIntValue = new int[] {
 //                    CameraMetadata.CONTROL_AF_TRIGGER_IDLE,
 //                    CameraMetadata.CONTROL_AF_TRIGGER_START,
@@ -139,7 +139,7 @@
 //            int[] values = character.get(CameraCharacteristics.COLOR_CORRECTION_AVAILABLE_ABERRATION_MODES);
 //
 //            List<Option.Info> result = new ArrayList<>();
-//            Map<Integer, Option.Info> allOption = CameraAllOption.DetailOption.COLOR_CORRECTION_ABERRATION_MODE.get();
+//            Map<Integer, Option.Info> allOption = CameraAllOption.SelectDetailOption.COLOR_CORRECTION_ABERRATION_MODE.get();
 //
 //            for (int value : values) {
 //                if (allOption.containsKey(value)) {
@@ -155,7 +155,7 @@
 //            int[] values = character.get(CameraCharacteristics.CONTROL_AE_AVAILABLE_ANTIBANDING_MODES);
 //
 //            List<Option.Info> result = new ArrayList<>();
-//            Map<Integer, Option.Info> allOption = CameraAllOption.DetailOption.CONTROL_AE_ANTIBANDING_MODE.get();
+//            Map<Integer, Option.Info> allOption = CameraAllOption.SelectDetailOption.CONTROL_AE_ANTIBANDING_MODE.get();
 //
 //            for (int value : values) {
 //                if (allOption.containsKey(value)) {
@@ -182,7 +182,7 @@
 //            return CameraCharacteristics.CONTROL_AF_AVAILABLE_MODES;
 //        } else if (TextUtils.equals(name, CaptureRequest.CONTROL_AF_TRIGGER.getName())) {
 //            Option detail = new IntegerOption(key);
-//            detail.setAvailableValue(CameraAllOption.DetailOption.CONTROL_AF_TRIGGER.get());
+//            detail.setAvailableValue(CameraAllOption.SelectDetailOption.CONTROL_AF_TRIGGER.get());
 //            return detail;
 //
 //        }

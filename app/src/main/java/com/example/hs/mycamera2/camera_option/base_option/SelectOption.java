@@ -3,7 +3,7 @@ package com.example.hs.mycamera2.camera_option.base_option;
 import android.hardware.camera2.CaptureRequest;
 
 import com.example.hs.mycamera2.camera_option.OptionType;
-import com.example.hs.mycamera2.camera_option.detail_option.DetailOption;
+import com.example.hs.mycamera2.camera_option.detail_option.SelectDetailOption;
 
 /**
  * Created by user on 2018. 4. 18..
@@ -32,8 +32,8 @@ public enum SelectOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.COLOR_CORRECTION_MODE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.COLOR_CORRECTION_MODE;
         }
 
         @Override
@@ -63,8 +63,8 @@ public enum SelectOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.COLOR_CORRECTION_ABERRATION_MODE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.COLOR_CORRECTION_ABERRATION_MODE;
         }
 
         @Override
@@ -94,8 +94,8 @@ public enum SelectOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.CONTROL_AE_ANTIBANDING_MODE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.CONTROL_AE_ANTIBANDING_MODE;
         }
 
         @Override
@@ -125,8 +125,8 @@ public enum SelectOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.CONTROL_AE_MODE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.CONTROL_AE_MODE;
         }
 
         @Override
@@ -156,8 +156,8 @@ public enum SelectOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.CONTROL_AE_PRECAPTURE_TRIGGER;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.CONTROL_AE_PRECAPTURE_TRIGGER;
         }
 
         @Override
@@ -187,8 +187,8 @@ public enum SelectOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.CONTROL_AF_MODE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.CONTROL_AF_MODE;
         }
 
         @Override
@@ -218,8 +218,8 @@ public enum SelectOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.CONTROL_AF_TRIGGER;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.CONTROL_AF_TRIGGER;
         }
 
         @Override
@@ -249,8 +249,8 @@ public enum SelectOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.CONTROL_AWB_MODE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.CONTROL_AWB_MODE;
         }
 
         @Override
@@ -280,8 +280,8 @@ public enum SelectOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.CONTROL_CAPTURE_INTENT;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.CONTROL_CAPTURE_INTENT;
         }
 
         @Override
@@ -311,8 +311,8 @@ public enum SelectOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.CONTROL_EFFECT_MODE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.CONTROL_EFFECT_MODE;
         }
 
         @Override
@@ -342,8 +342,8 @@ public enum SelectOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.CONTROL_MODE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.CONTROL_MODE;
         }
 
         @Override
@@ -373,8 +373,8 @@ public enum SelectOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.CONTROL_SCENE_MODE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.CONTROL_SCENE_MODE;
         }
 
         @Override
@@ -404,8 +404,8 @@ public enum SelectOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.CONTROL_VIDEO_STABILIZATION_MODE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.CONTROL_VIDEO_STABILIZATION_MODE;
         }
 
         @Override
@@ -435,8 +435,8 @@ public enum SelectOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.EDGE_MODE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.EDGE_MODE;
         }
 
         @Override
@@ -466,8 +466,8 @@ public enum SelectOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.FLASH_MODE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.FLASH_MODE;
         }
 
         @Override
@@ -497,8 +497,8 @@ public enum SelectOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.HOT_PIXEL_MODE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.HOT_PIXEL_MODE;
         }
 
         @Override
@@ -528,8 +528,8 @@ public enum SelectOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.LENS_OPTICAL_STABILIZATION_MODE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.LENS_OPTICAL_STABILIZATION_MODE;
         }
 
         @Override
@@ -559,8 +559,8 @@ public enum SelectOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.NOISE_REDUCTION_MODE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.NOISE_REDUCTION_MODE;
         }
 
         @Override
@@ -590,8 +590,8 @@ public enum SelectOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.STATISTICS_LENS_SHADING_MAP_MODE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.STATISTICS_LENS_SHADING_MAP_MODE;
         }
 
         @Override
@@ -621,8 +621,8 @@ public enum SelectOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.TONEMAP_MODE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.TONEMAP_MODE;
         }
 
         @Override
@@ -652,8 +652,8 @@ public enum SelectOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.SHADING_MODE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.SHADING_MODE;
         }
 
         @Override
@@ -683,8 +683,8 @@ public enum SelectOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.SENSOR_TEST_PATTERN_MODE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.SENSOR_TEST_PATTERN_MODE;
         }
 
         @Override
@@ -714,8 +714,8 @@ public enum SelectOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.STATISTICS_FACE_DETECT_MODE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.STATISTICS_FACE_DETECT_MODE;
         }
 
         @Override
@@ -745,8 +745,8 @@ public enum SelectOption implements CameraOption {
         }
 
         @Override
-        public DetailOption getDetailOption() {
-            return DetailOption.TONEMAP_PRESET_CURVE;
+        public SelectDetailOption getDetailOption() {
+            return SelectDetailOption.TONEMAP_PRESET_CURVE;
         }
 
         @Override

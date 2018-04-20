@@ -11,7 +11,7 @@ import java.util.List;
  * Created by user on 2018. 4. 18..
  */
 
-public enum DetailOption implements CameraDetailOption {
+public enum SelectDetailOption implements CameraDetailOption {
     NONE {
         @Override
         public List<DetailOptionInfo> getDetailOptionInfos() {

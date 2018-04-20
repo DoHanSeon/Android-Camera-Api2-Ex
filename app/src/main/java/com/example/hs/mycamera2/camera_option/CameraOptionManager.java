@@ -11,10 +11,10 @@ import com.example.hs.mycamera2.CameraApplication;
 import com.example.hs.mycamera2.camera_option.base_option.CameraOption;
 import com.example.hs.mycamera2.camera_option.base_option.CheckOption;
 import com.example.hs.mycamera2.camera_option.base_option.SelectOption;
-import com.example.hs.mycamera2.camera_option.detail_option.DetailOption;
+import com.example.hs.mycamera2.camera_option.base_option.SetOption;
+import com.example.hs.mycamera2.camera_option.base_option.SlideOption;
 import com.example.hs.mycamera2.camera_option.detail_option.DetailOptionInfo;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +51,7 @@ public class CameraOptionManager {
                 //TODO available value
                 cameraOption.getDetailOption().initAvailableOption(character);
                 cameraKeyMap.put(cameraOption.hashCode(), cameraOption);
+                Log.d("hanseon--", "\n");
                 logCameraOption(cameraOption);
             }
         }
@@ -63,11 +64,31 @@ public class CameraOptionManager {
         Map<Integer, CameraOption> map = new HashMap<>();
 
         for (CameraOption option : CheckOption.values()) {
-            map.put(option.getKey().hashCode(), option);
+            CaptureRequest.Key<?> key = option.getKey();
+            if (key != null) {
+                map.put(key.hashCode(), option);
+            }
         }
 
         for (CameraOption option : SelectOption.values()) {
-            map.put(option.getKey().hashCode(), option);
+            CaptureRequest.Key<?> key = option.getKey();
+            if (key != null) {
+                map.put(key.hashCode(), option);
+            }
+        }
+
+        for (CameraOption option : SetOption.values()) {
+            CaptureRequest.Key<?> key = option.getKey();
+            if (key != null) {
+                map.put(key.hashCode(), option);
+            }
+        }
+
+        for (CameraOption option : SlideOption.values()) {
+            CaptureRequest.Key<?> key = option.getKey();
+            if (key != null) {
+                map.put(key.hashCode(), option);
+            }
         }
         return map;
     }
@@ -79,7 +100,18 @@ public class CameraOptionManager {
 
         List<DetailOptionInfo> detailOptionInfos = cameraOption.getDetailOption().getDetailOptionInfos();
         if (detailOptionInfos != null && detailOptionInfos.size() > 0) {
-            sb.append("Detail Option exist - " + detailOptionInfos.size()).append("EA").append("\n");
+            sb.append("Detail Option exist - " + detailOptionInfos.size()).append("EA").append("\n").append("\t");
+            for (int i=0; i<detailOptionInfos.size(); i++) {
+                DetailOptionInfo info = detailOptionInfos.get(i);
+
+                sb.append(info.getDisplayName());
+                if (i == detailOptionInfos.size() - 1) {
+                    sb.append("\n");
+                } else {
+                    sb.append("\t");
+                }
+
+            }
         } else {
             sb.append("Detail Option not exist").append("\n");
         }
