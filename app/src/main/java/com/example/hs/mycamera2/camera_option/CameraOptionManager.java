@@ -55,9 +55,6 @@ public class CameraOptionManager {
                 logCameraOption(cameraOption);
             }
         }
-
-
-
     }
 
     private Map<Integer, CameraOption> getAllCaptureKey() {
