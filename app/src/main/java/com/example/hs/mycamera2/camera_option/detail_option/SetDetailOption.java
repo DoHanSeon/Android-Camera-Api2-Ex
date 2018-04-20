@@ -14,8 +14,6 @@ import java.util.List;
 
 public enum  SetDetailOption implements CameraDetailOption {
     CONTROL_AE_EXPOSURE_COMPENSATION {
-        private List<DetailOptionInfo> items = new ArrayList<>();
-
         @Override
         public List<DetailOptionInfo> getDetailOptionInfos() {
             return items;
@@ -40,8 +38,6 @@ public enum  SetDetailOption implements CameraDetailOption {
         }
     },
     JPEG_ORIENTATION {
-        private List<DetailOptionInfo> items = new ArrayList<>();
-
         @Override
         public List<DetailOptionInfo> getDetailOptionInfos() {
             return null;

@@ -10,17 +10,29 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.example.hs.mycamera2.camera_option.CameraOption;
+import com.example.hs.mycamera2.camera_option.detail_option.CameraDetailOption;
+import com.example.hs.mycamera2.camera_option.detail_option.DetailOptionInfo;
 import com.example.hs.mycamera2.option.CameraAllOption;
 import com.example.hs.mycamera2.util.ScreenUtil;
+
+import java.util.List;
 
 /**
  * Created by user on 2018. 4. 16..
  */
 
 public class SettingsView extends ScrollView implements View.OnClickListener {
+
+    LinearLayout rootView;
+
+    private Context context;
+
     public SettingsView(Context context) {
         this(context, null);
     }
@@ -31,9 +43,82 @@ public class SettingsView extends ScrollView implements View.OnClickListener {
 
     public SettingsView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.context = context;
+        rootView = new LinearLayout(context);
+        rootView.setOrientation(LinearLayout.VERTICAL);
+        addView(rootView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        initUi(context);
     }
+
+
+    public void initView(List<CameraOption> cameraOptions) {
+        for (CameraOption option : cameraOptions) {
+            View view = null;
+            switch (option.getOptionType()) {
+                case CHECK:
+                    break;
+                case SELECT:
+                    view = createSelectOptionView(option);
+                    break;
+                case SETTING_VALUE:
+                    break;
+                case SLIDE:
+                    break;
+            }
+
+            rootView.addView(view, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        }
+    }
+
+    private View createSelectOptionView(CameraOption option) {
+
+        LinearLayout rootView = new LinearLayout(context);
+        rootView.setOrientation(LinearLayout.VERTICAL);
+
+
+        CameraDetailOption detailOption = option.getDetailOption();
+
+        TextView textView = new TextView(context);
+        textView.setText(option.getDisplayName());
+
+        RadioGroup group = new RadioGroup(context);
+        for (DetailOptionInfo info : detailOption.getDetailOptionInfos()) {
+            RadioButton button = new RadioButton(context);
+            button.setId((Integer) info.getValue());
+            button.setTag(info.getValue());
+            button.setText(info.getDisplayName());
+            group.addView(button);
+        }
+
+        group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                View view = group.findViewById(checkedId);
+            }
+        });
+
+
+
+        rootView.addView(textView, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        rootView.addView(group, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        return rootView;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private void initUi(Context context) {
         setBackgroundColor(Color.WHITE);

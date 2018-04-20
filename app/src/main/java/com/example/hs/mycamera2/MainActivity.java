@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
             fragment = new OptionFragment();
             fm.beginTransaction().replace(optionFragmentView.getId(), fragment, OptionFragment.TAG).commitAllowingStateLoss();
         }
-        ((OptionFragment) fragment).refresh(cameraId);
+//        ((OptionFragment) fragment).refresh(cameraId);
         optionFragmentView.setVisibility(View.VISIBLE);
     }
 

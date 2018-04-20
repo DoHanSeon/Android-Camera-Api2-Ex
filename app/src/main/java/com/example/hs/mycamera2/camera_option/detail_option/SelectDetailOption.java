@@ -3,6 +3,7 @@ package com.example.hs.mycamera2.camera_option.detail_option;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraConstrainedHighSpeedCaptureSession;
 import android.hardware.camera2.CameraMetadata;
+import android.hardware.camera2.CaptureRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ public enum SelectDetailOption implements CameraDetailOption {
         }
     },
     COLOR_CORRECTION_MODE {
-        private List<DetailOptionInfo> items = new ArrayList<>();
+
         @Override
         public List<DetailOptionInfo> getDetailOptionInfos() {
             return items;
@@ -42,7 +43,7 @@ public enum SelectDetailOption implements CameraDetailOption {
         }
     },
     COLOR_CORRECTION_ABERRATION_MODE {
-        private List<DetailOptionInfo> items = new ArrayList<>();
+        
         @Override
         public List<DetailOptionInfo> getDetailOptionInfos() {
             return items;
