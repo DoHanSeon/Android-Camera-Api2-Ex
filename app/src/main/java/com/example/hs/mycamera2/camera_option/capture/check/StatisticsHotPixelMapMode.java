@@ -1,16 +1,25 @@
 package com.example.hs.mycamera2.camera_option.capture.check;
 
+import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CaptureRequest;
 
-import com.example.hs.mycamera2.camera_option.OptionType;
 import com.example.hs.mycamera2.camera_option.CameraOption;
-import com.example.hs.mycamera2.camera_option.detail_option.SelectDetailOption;
+import com.example.hs.mycamera2.camera_option.capture.OptionType;
 
 /**
  * Created by user on 2018. 4. 20..
  */
 
-public class StatisticsHotPixelMapMode implements CameraOption<Boolean> {
+public class StatisticsHotPixelMapMode extends CameraOption<Boolean> {
+    public StatisticsHotPixelMapMode(CameraCharacteristics characteristics) {
+        super(characteristics);
+    }
+
+    @Override
+    protected void initailize(CameraCharacteristics characteristics) {
+
+    }
+
     @Override
     public CaptureRequest.Key<Boolean> getKey() {
         return CaptureRequest.STATISTICS_HOT_PIXEL_MAP_MODE;
@@ -29,10 +38,5 @@ public class StatisticsHotPixelMapMode implements CameraOption<Boolean> {
     @Override
     public String getDescriptionFilePath() {
         return null;
-    }
-
-    @Override
-    public SelectDetailOption getDetailOption() {
-        return SelectDetailOption.NONE;
     }
 }

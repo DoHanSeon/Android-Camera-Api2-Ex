@@ -9,13 +9,14 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.hs.mycamera2.R;
-//import com.example.hs.mycamera2.option2.CameraOption2;
 
 import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+//import com.example.hs.mycamera2.option2.CameraOption2;
 
 /**
  * Created by user on 2018. 4. 17..

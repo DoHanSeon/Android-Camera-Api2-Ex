@@ -1,16 +1,34 @@
 package com.example.hs.mycamera2.camera_option.capture.select;
 
+import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraMetadata;
 import android.hardware.camera2.CaptureRequest;
 
-import com.example.hs.mycamera2.camera_option.OptionType;
 import com.example.hs.mycamera2.camera_option.CameraOption;
-import com.example.hs.mycamera2.camera_option.detail_option.SelectDetailOption;
+import com.example.hs.mycamera2.camera_option.capture.OptionType;
+import com.example.hs.mycamera2.camera_option.capture.DetailOptionInfo;
 
 /**
  * Created by user on 2018. 4. 20..
  */
 
-public class ColorCorrectionMode implements CameraOption<Integer> {
+public class ColorCorrectionMode extends CameraOption<Integer> {
+
+    public ColorCorrectionMode(CameraCharacteristics characteristics) {
+        super(characteristics);
+    }
+
+    @Override
+    protected void initailize(CameraCharacteristics characteristics) {
+        items.clear();
+        Integer value = characteristics.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
+        if (value != null && value == CameraMetadata.INFO_SUPPORTED_HARDWARE_LEVEL_FULL) {
+            items.add(new DetailOptionInfo<>(CameraMetadata.COLOR_CORRECTION_MODE_TRANSFORM_MATRIX, "TRANSFORM MATRIX"));
+            items.add(new DetailOptionInfo<>(CameraMetadata.COLOR_CORRECTION_MODE_FAST, "FAST"));
+            items.add(new DetailOptionInfo<>(CameraMetadata.COLOR_CORRECTION_MODE_HIGH_QUALITY, "HIGH QUALITY"));
+        }
+    }
+
     @Override
     public CaptureRequest.Key<Integer> getKey() {
         return CaptureRequest.COLOR_CORRECTION_MODE;
@@ -24,11 +42,6 @@ public class ColorCorrectionMode implements CameraOption<Integer> {
     @Override
     public OptionType getOptionType() {
         return OptionType.SELECT;
-    }
-
-    @Override
-    public SelectDetailOption getDetailOption() {
-        return SelectDetailOption.COLOR_CORRECTION_MODE;
     }
 
     @Override

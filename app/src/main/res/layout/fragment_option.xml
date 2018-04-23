@@ -7,7 +7,7 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp">
 
-    <com.example.hs.mycamera2.SettingsView
+    <com.example.hs.mycamera2.CameraSettingsView
         android:id="@+id/setting_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

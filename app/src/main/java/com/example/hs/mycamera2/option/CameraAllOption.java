@@ -11,9 +11,9 @@ import java.util.Map;
 import static com.example.hs.mycamera2.option.CameraAllOption.Type.CHECK;
 import static com.example.hs.mycamera2.option.CameraAllOption.Type.FLOAT_INPUT;
 import static com.example.hs.mycamera2.option.CameraAllOption.Type.INTEGER_INPUT;
+import static com.example.hs.mycamera2.option.CameraAllOption.Type.LONG_INPUT;
 import static com.example.hs.mycamera2.option.CameraAllOption.Type.NOT_SUPPORTED;
 import static com.example.hs.mycamera2.option.CameraAllOption.Type.SELECT;
-import static com.example.hs.mycamera2.option.CameraAllOption.Type.LONG_INPUT;
 
 /**
  * Created by user on 2018. 4. 16..

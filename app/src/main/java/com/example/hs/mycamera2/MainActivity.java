@@ -18,6 +18,7 @@ import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.Image;
 import android.media.ImageReader;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -26,10 +27,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.util.Size;
-import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.Surface;
 import android.view.TextureView;
@@ -48,10 +47,12 @@ import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CameraSettingsView.OptionCallback {
 
     private static final String SAVE_DIRECTORY_NAME = "temp";
 
@@ -80,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean flashSupported;
     private Handler backgroundHandler;
     private HandlerThread backgroundThread;
+
+    private Map<CaptureRequest.Key, Object> applyedOptions = new HashMap<>();
 
 
     private TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {
@@ -146,7 +149,6 @@ public class MainActivity extends AppCompatActivity {
             fragment = new OptionFragment();
             fm.beginTransaction().replace(optionFragmentView.getId(), fragment, OptionFragment.TAG).commitAllowingStateLoss();
         }
-//        ((OptionFragment) fragment).refresh(cameraId);
         optionFragmentView.setVisibility(View.VISIBLE);
     }
 
@@ -191,7 +193,11 @@ public class MainActivity extends AppCompatActivity {
             final CaptureRequest.Builder captureBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
             captureBuilder.addTarget(reader.getSurface());
             //TODO setting capture option (ex key, value)
-            captureBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
+            for (CaptureRequest.Key key : applyedOptions.keySet()) {
+                captureBuilder.set(key, applyedOptions.get(key));
+            }
+
+//            captureBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
 //            captureBuilder.set();
 
 
@@ -276,8 +282,10 @@ public class MainActivity extends AppCompatActivity {
             SurfaceTexture texture = textureView.getSurfaceTexture();
             texture.setDefaultBufferSize(imageDimension.getWidth(), imageDimension.getHeight());
             Surface surface = new Surface(texture);
-            captureRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
-            captureRequestBuilder.addTarget(surface);
+            if (captureRequestBuilder == null) {
+                captureRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+                captureRequestBuilder.addTarget(surface);
+            }
             cameraDevice.createCaptureSession(Arrays.asList(surface), new CameraCaptureSession.StateCallback() {
                 @Override
                 public void onConfigured(@NonNull CameraCaptureSession session) {
@@ -298,13 +306,28 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onChangeCheckOption(CaptureRequest.Key<Boolean> key, boolean isChecked) {
+        if (captureRequestBuilder != null) {
+            applyedOptions.put(key, isChecked);
+            captureRequestBuilder.set(key, isChecked);
+            updatePreview();
+        }
+    }
+
+    @Override
+    public void onChangeSelectOption(CaptureRequest.Key<Integer> key, int option) {
+        if (captureRequestBuilder != null) {
+            applyedOptions.put(key, option);
+            captureRequestBuilder.set(key, option);
+            updatePreview();
+        }
+    }
+
     private void updatePreview() {
         if (cameraDevice == null) {
-
             return;
         }
-
-        captureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CaptureRequest.CONTROL_MODE_AUTO);
         try {
             cameraCaptureSession.setRepeatingRequest(captureRequestBuilder.build(), null, backgroundHandler);
         } catch (CameraAccessException e) {

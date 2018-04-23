@@ -2,7 +2,6 @@ package com.example.hs.mycamera2.option2;
 
 import android.hardware.camera2.CaptureRequest;
 
-
 import java.util.List;
 
 /**

@@ -1,6 +1,5 @@
 package com.example.hs.mycamera2.util;
 
-import android.content.Context;
 import android.util.TypedValue;
 
 import com.example.hs.mycamera2.CameraApplication;
