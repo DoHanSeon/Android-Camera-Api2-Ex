@@ -21,7 +21,7 @@ public class ControlAeExposureCompensation extends CameraOption<Integer> {
     @Override
     protected void initailize(CameraCharacteristics characteristics) {
         Range<Integer> range = characteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE);
-        Rational rational = characteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_STEP);
+//        Rational rational = characteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_STEP);
 
         Integer lower = range.getLower();
         Integer upper = range.getUpper();
@@ -29,11 +29,8 @@ public class ControlAeExposureCompensation extends CameraOption<Integer> {
             return;
         }
 
-        int value = lower;
-        while (value <= upper) {
-            items.add(new DetailOptionInfo<>(value, String.valueOf(value)));
-            value += rational.intValue();
-        }
+        items.add(new DetailOptionInfo<>(lower, "LOWER"));
+        items.add(new DetailOptionInfo<>(upper, "UPPER"));
     }
 
     @Override

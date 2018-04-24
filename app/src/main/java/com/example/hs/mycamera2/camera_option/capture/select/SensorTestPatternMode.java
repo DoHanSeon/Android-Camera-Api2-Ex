@@ -12,8 +12,8 @@ import com.example.hs.mycamera2.camera_option.capture.DetailOptionInfo;
  * Created by user on 2018. 4. 20..
  */
 
-public class SensorTestpatternMode extends CameraOption<Integer> {
-    public SensorTestpatternMode(CameraCharacteristics characteristics) {
+public class SensorTestPatternMode extends CameraOption<Integer> {
+    public SensorTestPatternMode(CameraCharacteristics characteristics) {
         super(characteristics);
     }
 

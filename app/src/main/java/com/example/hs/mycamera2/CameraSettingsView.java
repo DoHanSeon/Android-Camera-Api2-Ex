@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.hardware.camera2.CaptureRequest;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.hs.mycamera2.camera_option.CameraOption;
@@ -64,6 +66,9 @@ public class CameraSettingsView extends ScrollView implements View.OnClickListen
             case SELECT:
                 initSelectOptionView(cameraOption.getKey(), cameraOption.getItems(), cameraOption.getDisplayName());
                 break;
+            case SLIDE:
+                initSlideOptionView(cameraOption.getKey(), cameraOption.getItems(), cameraOption.getDisplayName());
+                break;
         }
     }
 
@@ -96,8 +101,9 @@ public class CameraSettingsView extends ScrollView implements View.OnClickListen
         checkBox.setOnCheckedChangeListener((view, isChecked) -> optionCallback.onChangeCheckOption(key, isChecked));
     }
 
-    private void initSelectOptionView(CaptureRequest.Key<Integer> key, List<DetailOptionInfo<Integer>> detailOptionInfos, String displayName) {
+    private void initSelectOptionView(CaptureRequest.Key<Number> key, List<DetailOptionInfo<Number>> detailOptionInfos, String displayName) {
         if (detailOptionInfos.size() == 0) {
+            Log.d("hanseon--", "initSelectOptionView child size is 0 -> return : " + key.getName());
             return;
         }
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -117,14 +123,92 @@ public class CameraSettingsView extends ScrollView implements View.OnClickListen
         parent.addView(title, lp);
 
         RadioGroup radioGroup = new RadioGroup(context);
-        for (DetailOptionInfo<Integer> info : detailOptionInfos) {
+//        for (DetailOptionInfo<Integer> info : detailOptionInfos) {
+        for (int i=0; i<detailOptionInfos.size(); i++) {
             RadioButton button = new RadioButton(context);
-            button.setId(info.getValue());
+            DetailOptionInfo info = detailOptionInfos.get(i);
+            button.setId(i);
+            button.setTag(info.getValue());
             button.setText(info.getDisplayName());
             radioGroup.addView(button);
         }
-        radioGroup.setOnCheckedChangeListener((group, value) -> optionCallback.onChangeSelectOption(key, value));
+        radioGroup.setOnCheckedChangeListener((group, id) -> {
+
+            Object value = group.findViewById(id).getTag();
+            optionCallback.onChangeSelectOption(key, (Number) value);
+        });
         parent.addView(radioGroup);
+    }
+
+    private <T> void initSlideOptionView(CaptureRequest.Key<Integer> key, List<DetailOptionInfo<T>> detailOptionInfos, String displayName) {
+        if (detailOptionInfos.size() != 2) {
+            Log.d("hanseon--", "initSlideOptionView child size is 0 -> return : " + key.getName());
+            return;
+        }
+
+        DetailOptionInfo<T> minValue = detailOptionInfos.get(0);
+        DetailOptionInfo<T> maxValue = detailOptionInfos.get(1);
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout parent = new LinearLayout(context);
+        parent.setOrientation(LinearLayout.VERTICAL);
+        rootView.addView(parent, lp);
+
+        //title (min value, max value)
+        LinearLayout titleLayout = new LinearLayout(context);
+        titleLayout.setOrientation(LinearLayout.HORIZONTAL);
+        titleLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.LEFT;
+        TextView minTextView = new TextView(context);
+        minTextView.setTextColor(Color.WHITE);
+        minTextView.setText(minValue.getDisplayName());
+        minTextView.setLayoutParams(lp);
+
+        lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.RIGHT;
+        TextView maxTextView = new TextView(context);
+        maxTextView.setTextColor(Color.WHITE);
+        maxTextView.setText(maxValue.getDisplayName());
+        maxTextView.setLayoutParams(lp);
+
+        titleLayout.addView(minTextView);
+        titleLayout.addView(maxTextView);
+
+        parent.addView(titleLayout);
+
+        //seekbar
+        SeekBar seekBar = null;
+        if (minValue.getValue() instanceof Float) {
+            seekBar = new FloatSeekBar(context);
+        } else {
+            seekBar = new SeekBar(context);
+        }
+//        seekBar.setMin((Integer) minValue.getValue());
+        seekBar.setMax((Integer) maxValue.getValue());
+        seekBar.setProgress((Integer) minValue.getValue());
+
+        parent.addView(seekBar);
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                Log.d("hanseon--", key.getName() + " : " + progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+
     }
 
 
@@ -279,6 +363,6 @@ public class CameraSettingsView extends ScrollView implements View.OnClickListen
 
     public interface OptionCallback {
         void onChangeCheckOption(CaptureRequest.Key<Boolean> key, boolean isChecked);
-        void onChangeSelectOption(CaptureRequest.Key<Integer> key, int option);
+        void onChangeSelectOption(CaptureRequest.Key<Number> key, Number option);
     }
 }

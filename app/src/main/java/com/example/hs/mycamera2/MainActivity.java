@@ -316,8 +316,9 @@ public class MainActivity extends AppCompatActivity implements CameraSettingsVie
     }
 
     @Override
-    public void onChangeSelectOption(CaptureRequest.Key<Integer> key, int option) {
+    public void onChangeSelectOption(CaptureRequest.Key<Number> key, Number option) {
         if (captureRequestBuilder != null) {
+            Log.d("hanseon--", "onChangeSelectOPtion : " + key.getName() + ", " + option.intValue() + ", " + option.floatValue());
             applyedOptions.put(key, option);
             captureRequestBuilder.set(key, option);
             updatePreview();

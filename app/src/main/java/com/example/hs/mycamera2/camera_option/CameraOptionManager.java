@@ -29,9 +29,12 @@ import com.example.hs.mycamera2.camera_option.capture.select.ControlVideoStabili
 import com.example.hs.mycamera2.camera_option.capture.select.EdgeMode;
 import com.example.hs.mycamera2.camera_option.capture.select.FlashMode;
 import com.example.hs.mycamera2.camera_option.capture.select.HotPixelMode;
+import com.example.hs.mycamera2.camera_option.capture.select.LensAperture;
+import com.example.hs.mycamera2.camera_option.capture.select.LensFilterDensity;
+import com.example.hs.mycamera2.camera_option.capture.select.LensFocalLength;
 import com.example.hs.mycamera2.camera_option.capture.select.LensOpticalStabilizationMode;
 import com.example.hs.mycamera2.camera_option.capture.select.NoiseReductionMode;
-import com.example.hs.mycamera2.camera_option.capture.select.SensorTestpatternMode;
+import com.example.hs.mycamera2.camera_option.capture.select.SensorTestPatternMode;
 import com.example.hs.mycamera2.camera_option.capture.select.ShadingMode;
 import com.example.hs.mycamera2.camera_option.capture.select.StatisticsFaceDetectMode;
 import com.example.hs.mycamera2.camera_option.capture.select.StatisticsLensShadingMapMode;
@@ -41,8 +44,11 @@ import com.example.hs.mycamera2.camera_option.capture.set.ControlAeExposureCompe
 import com.example.hs.mycamera2.camera_option.capture.set.JpegOrientation;
 import com.example.hs.mycamera2.camera_option.capture.slide.ControlPostRawSensitivityBoost;
 import com.example.hs.mycamera2.camera_option.capture.DetailOptionInfo;
+import com.example.hs.mycamera2.camera_option.capture.slide.LensFocusDistance;
+import com.example.hs.mycamera2.camera_option.capture.slide.SensorExposureTime;
+import com.example.hs.mycamera2.camera_option.capture.slide.SensorSensitivity;
+import com.example.hs.mycamera2.camera_option.capture.slide.TonemapGamma;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -142,7 +148,7 @@ public class CameraOptionManager {
         allCaptureOption.put(option.getKey().hashCode(), option);
         option = new NoiseReductionMode(characteristics);
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new SensorTestpatternMode(characteristics);
+        option = new SensorTestPatternMode(characteristics);
         allCaptureOption.put(option.getKey().hashCode(), option);
         option = new ShadingMode(characteristics);
         allCaptureOption.put(option.getKey().hashCode(), option);
@@ -154,19 +160,35 @@ public class CameraOptionManager {
         allCaptureOption.put(option.getKey().hashCode(), option);
         option = new TonemapPresetCurve(characteristics);
         allCaptureOption.put(option.getKey().hashCode(), option);
+        option = new LensAperture(characteristics);
+        allCaptureOption.put(option.getKey().hashCode(), option);
+        option = new LensFilterDensity(characteristics);
+        allCaptureOption.put(option.getKey().hashCode(), option);
+        option = new LensFocalLength(characteristics);
+        allCaptureOption.put(option.getKey().hashCode(), option);
+
 
         //TODO  해당 주석부분 OOM 이슈 발생함
 //        //set
-//        option = new ControlAeExposureCompensation(characteristics);
-//        allCaptureOption.put(option.getKey().hashCode(), option);
+        option = new ControlAeExposureCompensation(characteristics);
+        allCaptureOption.put(option.getKey().hashCode(), option);
         option = new JpegOrientation(characteristics);
         allCaptureOption.put(option.getKey().hashCode(), option);
-//
-//        //slide
+
+        //slide
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             option = new ControlPostRawSensitivityBoost(characteristics);
             allCaptureOption.put(option.getKey().hashCode(), option);
         }
+        option = new SensorSensitivity(characteristics);
+        allCaptureOption.put(option.getKey().hashCode(), option);
+        option = new LensFocusDistance(characteristics);
+        allCaptureOption.put(option.getKey().hashCode(), option);
+        option = new TonemapGamma(characteristics);
+        allCaptureOption.put(option.getKey().hashCode(), option);
+        option = new SensorExposureTime(characteristics);
+        allCaptureOption.put(option.getKey().hashCode(), option);
+
         return allCaptureOption;
     }
 
