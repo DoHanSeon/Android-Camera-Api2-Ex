@@ -11,7 +11,6 @@ import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
-import android.hardware.camera2.CameraMetadata;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
@@ -37,7 +36,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.hs.mycamera2.camera_option.CameraOptionManager;
-import com.example.hs.mycamera2.option.OptionFragment;
+import com.example.hs.mycamera2.camera_option.OptionFragment;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -52,7 +51,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class MainActivity extends AppCompatActivity implements CameraSettingsView.OptionCallback {
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
+public class MainActivity extends AppCompatActivity {
 
     private static final String SAVE_DIRECTORY_NAME = "temp";
 
@@ -83,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements CameraSettingsVie
     private HandlerThread backgroundThread;
 
     private Map<CaptureRequest.Key, Object> applyedOptions = new HashMap<>();
+
+    private boolean cameraOptionInitSuccess;
 
 
     private TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {
@@ -139,14 +143,21 @@ public class MainActivity extends AppCompatActivity implements CameraSettingsVie
 
         optionFragmentView = findViewById(R.id.option_fragment_view);
 
-        findViewById(R.id.btnOption).setOnClickListener(v -> showOptionFragment());
+        findViewById(R.id.btnOption).setOnClickListener(v -> {
+            Log.d("hanseon--", "camera option click");
+            if (!cameraOptionInitSuccess) {
+                Toast.makeText(MainActivity.this, "아직 카메라 옵션 초기화 안됨", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            showOptionFragment();
+        });
     }
 
     private void showOptionFragment() {
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentByTag(OptionFragment.TAG);
         if (fragment == null) {
-            fragment = new OptionFragment();
+            fragment = OptionFragment.createFragment(optionCallback);
             fm.beginTransaction().replace(optionFragmentView.getId(), fragment, OptionFragment.TAG).commitAllowingStateLoss();
         }
         optionFragmentView.setVisibility(View.VISIBLE);
@@ -282,6 +293,13 @@ public class MainActivity extends AppCompatActivity implements CameraSettingsVie
             SurfaceTexture texture = textureView.getSurfaceTexture();
             texture.setDefaultBufferSize(imageDimension.getWidth(), imageDimension.getHeight());
             Surface surface = new Surface(texture);
+            CameraOptionManager.getInstance().initialize(cameraId)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(result -> {
+                        Log.d("hanseon--", "camera option initialized");
+                        cameraOptionInitSuccess = true;
+                    });
             if (captureRequestBuilder == null) {
                 captureRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
                 captureRequestBuilder.addTarget(surface);
@@ -306,24 +324,71 @@ public class MainActivity extends AppCompatActivity implements CameraSettingsVie
         }
     }
 
-    @Override
-    public void onChangeCheckOption(CaptureRequest.Key<Boolean> key, boolean isChecked) {
-        if (captureRequestBuilder != null) {
-            applyedOptions.put(key, isChecked);
-            captureRequestBuilder.set(key, isChecked);
-            updatePreview();
+    private CameraSettingsView.OptionCallback optionCallback = new CameraSettingsView.OptionCallback() {
+        @Override
+        public void onChangeCheckOption(CaptureRequest.Key<Boolean> key, boolean isChecked) {
+            if (captureRequestBuilder != null) {
+                applyedOptions.put(key, isChecked);
+                captureRequestBuilder.set(key, isChecked);
+                updatePreview();
+            }
         }
-    }
 
-    @Override
-    public void onChangeSelectOption(CaptureRequest.Key<Number> key, Number option) {
-        if (captureRequestBuilder != null) {
-            Log.d("hanseon--", "onChangeSelectOPtion : " + key.getName() + ", " + option.intValue() + ", " + option.floatValue());
-            applyedOptions.put(key, option);
-            captureRequestBuilder.set(key, option);
-            updatePreview();
+        @Override
+        public void onChangeSelectOption(CaptureRequest.Key<Integer> key, int option) {
+            if (captureRequestBuilder != null) {
+                Log.d("hanseon--", "integer onChangeSelectOption : " + key.getName() + ", " + option);
+                applyedOptions.put(key, option);
+                captureRequestBuilder.set(key, option);
+                updatePreview();
+            }
         }
-    }
+
+        @Override
+        public void onChangeSelectOption(CaptureRequest.Key<Float> key, float option) {
+            if (captureRequestBuilder != null) {
+                Log.d("hanseon--", "float onChangeSelectOption : " + key.getName() + ", " + option);
+                applyedOptions.put(key, option);
+                captureRequestBuilder.set(key, option);
+                updatePreview();
+            }
+        }
+
+        @Override
+        public void onChangeSlideOption(CaptureRequest.Key<Integer> key, int option) {
+            if (captureRequestBuilder != null) {
+                Log.d("hanseon--", "integer onChangeSlideOption : " + key.getName() + ", " + option);
+                applyedOptions.put(key, option);
+                captureRequestBuilder.set(key, option);
+                updatePreview();
+            }
+        }
+
+        @Override
+        public void onChangeSlideOption(CaptureRequest.Key<Float> key, float option) {
+            if (captureRequestBuilder != null) {
+                Log.d("hanseon--", "float onChangeSlideOption : " + key.getName() + ", " + option);
+                applyedOptions.put(key, option);
+                captureRequestBuilder.set(key, option);
+                updatePreview();
+            }
+        }
+
+        @Override
+        public void onChangeSlideOption(CaptureRequest.Key<Long> key, long option) {
+            if (captureRequestBuilder != null) {
+                Log.d("hanseon--", "Long onChangeSlideOption : " + key.getName() + ", " + option);
+                applyedOptions.put(key, option);
+                captureRequestBuilder.set(key, option);
+                updatePreview();
+            }
+        }
+
+        @Override
+        public Object getCurrentValue(CaptureRequest.Key key) {
+            return captureRequestBuilder.get(key);
+        }
+    };
 
     private void updatePreview() {
         if (cameraDevice == null) {
@@ -342,7 +407,6 @@ public class MainActivity extends AppCompatActivity implements CameraSettingsVie
             cameraId = manager.getCameraIdList()[0];
             CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
             StreamConfigurationMap map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-            CameraOptionManager.getInstance().initialize(cameraId);
             imageDimension = map.getOutputSizes(SurfaceTexture.class)[0];
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {

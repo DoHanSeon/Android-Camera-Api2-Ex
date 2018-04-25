@@ -14,12 +14,9 @@ import com.example.hs.mycamera2.camera_option.capture.DetailOptionInfo;
  */
 
 public class ControlAeExposureCompensation extends CameraOption<Integer> {
-    public ControlAeExposureCompensation(CameraCharacteristics characteristics) {
-        super(characteristics);
-    }
 
     @Override
-    protected void initailize(CameraCharacteristics characteristics) {
+    public void initailize(CameraCharacteristics characteristics) {
         Range<Integer> range = characteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE);
 //        Rational rational = characteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_STEP);
 

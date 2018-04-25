@@ -3,6 +3,7 @@ package com.example.hs.mycamera2.camera_option;
 import android.content.Context;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CaptureRequest;
 import android.os.Build;
@@ -12,6 +13,7 @@ import com.example.hs.mycamera2.CameraApplication;
 import com.example.hs.mycamera2.camera_option.capture.check.BlackLevelLock;
 import com.example.hs.mycamera2.camera_option.capture.check.ControlAeLock;
 import com.example.hs.mycamera2.camera_option.capture.check.ControlAwbLock;
+import com.example.hs.mycamera2.camera_option.capture.check.ControlEnableZsl;
 import com.example.hs.mycamera2.camera_option.capture.check.StatisticsHotPixelMapMode;
 import com.example.hs.mycamera2.camera_option.capture.select.ColorCorrectionAbeRationMode;
 import com.example.hs.mycamera2.camera_option.capture.select.ColorCorrectionMode;
@@ -53,6 +55,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Observable;
+
 /**
  * Created by user on 2018. 4. 18..
  */
@@ -67,9 +71,6 @@ public class CameraOptionManager {
         return instance;
     }
 
-    private Map<Integer, CameraOption> allCaptureOption = new HashMap<>();
-
-
     private Map<Integer, CameraOption> cameraKeyMap = new HashMap<>();
 
     private CameraOptionManager() {
@@ -82,111 +83,123 @@ public class CameraOptionManager {
         return cameraKeyMap;
     }
 
-    public void initialize(String cameraId) throws CameraAccessException {
-        CameraManager manager =(CameraManager) CameraApplication.getContext().getSystemService(Context.CAMERA_SERVICE);
-        CameraCharacteristics character = manager.getCameraCharacteristics(cameraId);
-
-        List<CaptureRequest.Key<?>> availableKeys = character.getAvailableCaptureRequestKeys();
-        Map<Integer, CameraOption> allCaptureOption = getAllCaptureOption(character);
-
-        for (CaptureRequest.Key<?> key : availableKeys) {
-            CameraOption cameraOption = allCaptureOption.get(key.hashCode());
-            if (cameraOption != null) {
-                cameraOption.initailize(character);
-                cameraKeyMap.put(cameraOption.hashCode(), cameraOption);
-                Log.d("hanseon--", "\n");
-                logCameraOption(cameraOption);
+    public Observable<Boolean> initialize(String cameraId) {
+        return Observable.fromCallable(() -> {
+            if (!cameraKeyMap.isEmpty()) {
+                cameraKeyMap.clear();
             }
-        }
+            CameraManager manager =(CameraManager) CameraApplication.getContext().getSystemService(Context.CAMERA_SERVICE);
+            CameraCharacteristics character = manager.getCameraCharacteristics(cameraId);
+
+
+            List<CaptureRequest.Key<?>> availableKeys = character.getAvailableCaptureRequestKeys();
+            Map<Integer, CameraOption> allCaptureOption = getAllCaptureOption(character);
+
+            for (CaptureRequest.Key<?> key : availableKeys) {
+                CameraOption cameraOption = allCaptureOption.get(key.hashCode());
+                if (cameraOption != null) {
+                    cameraOption.initailize(character);
+                    cameraKeyMap.put(cameraOption.hashCode(), cameraOption);
+                    Log.d("hanseon--", "\n");
+                    logCameraOption(cameraOption);
+                }
+            }
+
+            Log.d("hanseon--", "avaulableTotal num, available num : " + availableKeys.size() + ", " + cameraKeyMap.size());
+            return true;
+        });
     }
 
     private Map<Integer, CameraOption> getAllCaptureOption(CameraCharacteristics characteristics) {
         Map<Integer, CameraOption> allCaptureOption = new HashMap<>();
-        CameraOption option = new BlackLevelLock(characteristics);
+        CameraOption option;
+        option = new BlackLevelLock();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new ControlAeLock(characteristics);
+        option = new ControlAeLock();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new ControlAwbLock(characteristics);
+        option = new ControlAwbLock();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new StatisticsHotPixelMapMode(characteristics);
+        option = new ControlEnableZsl();
+        allCaptureOption.put(option.getKey().hashCode(), option);
+        option = new StatisticsHotPixelMapMode();
         allCaptureOption.put(option.getKey().hashCode(), option);
 
         //select
-        option = new ColorCorrectionAbeRationMode(characteristics);
+        option = new ColorCorrectionAbeRationMode();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new ColorCorrectionMode(characteristics);
+        option = new ColorCorrectionMode();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new ControlAeAntibandingMode(characteristics);
+        option = new ControlAeAntibandingMode();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new ControlAeMode(characteristics);
+        option = new ControlAeMode();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new ControlAePrecaptureTrigger(characteristics);
+        option = new ControlAePrecaptureTrigger();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new ControlAfMode(characteristics);
+        option = new ControlAfMode();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new ControlAfTrigger(characteristics);
+        option = new ControlAfTrigger();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new ControlAwbMode(characteristics);
+        option = new ControlAwbMode();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new ControlCaptureIntent(characteristics);
+//        option = new ControlCaptureIntent();
+//        allCaptureOption.put(option.getKey().hashCode(), option);
+        option = new ControlEffectMode();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new ControlEffectMode(characteristics);
+        option = new ControlMode();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new ControlMode(characteristics);
+        option = new ControlSceneMode();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new ControlSceneMode(characteristics);
+        option = new ControlVideoStabilizationMode();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new ControlVideoStabilizationMode(characteristics);
+        option = new EdgeMode();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new EdgeMode(characteristics);
+        option = new FlashMode();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new FlashMode(characteristics);
+        option = new HotPixelMode();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new HotPixelMode(characteristics);
+        option = new LensOpticalStabilizationMode();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new LensOpticalStabilizationMode(characteristics);
+        option = new NoiseReductionMode();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new NoiseReductionMode(characteristics);
+        option = new SensorTestPatternMode();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new SensorTestPatternMode(characteristics);
+        option = new ShadingMode();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new ShadingMode(characteristics);
+        option = new StatisticsFaceDetectMode();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new StatisticsFaceDetectMode(characteristics);
+        option = new StatisticsLensShadingMapMode();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new StatisticsLensShadingMapMode(characteristics);
+        option = new TonemapMode();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new TonemapMode(characteristics);
+        option = new TonemapPresetCurve();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new TonemapPresetCurve(characteristics);
+        option = new LensAperture();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new LensAperture(characteristics);
+        option = new LensFilterDensity();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new LensFilterDensity(characteristics);
-        allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new LensFocalLength(characteristics);
+        option = new LensFocalLength();
         allCaptureOption.put(option.getKey().hashCode(), option);
 
 
         //TODO  해당 주석부분 OOM 이슈 발생함
 //        //set
-        option = new ControlAeExposureCompensation(characteristics);
-        allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new JpegOrientation(characteristics);
-        allCaptureOption.put(option.getKey().hashCode(), option);
+//        option = new ControlAeExposureCompensation();
+//        allCaptureOption.put(option.getKey().hashCode(), option);
+//        option = new JpegOrientation();
+//        allCaptureOption.put(option.getKey().hashCode(), option);
 
-        //slide
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            option = new ControlPostRawSensitivityBoost(characteristics);
+            option = new ControlPostRawSensitivityBoost();
             allCaptureOption.put(option.getKey().hashCode(), option);
         }
-        option = new SensorSensitivity(characteristics);
+        option = new SensorSensitivity();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new LensFocusDistance(characteristics);
+        option = new LensFocusDistance();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new TonemapGamma(characteristics);
+        option = new TonemapGamma();
         allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new SensorExposureTime(characteristics);
+        option = new SensorExposureTime();
         allCaptureOption.put(option.getKey().hashCode(), option);
 
         return allCaptureOption;

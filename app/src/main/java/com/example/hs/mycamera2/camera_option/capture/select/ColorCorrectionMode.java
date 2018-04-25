@@ -14,12 +14,8 @@ import com.example.hs.mycamera2.camera_option.capture.DetailOptionInfo;
 
 public class ColorCorrectionMode extends CameraOption<Integer> {
 
-    public ColorCorrectionMode(CameraCharacteristics characteristics) {
-        super(characteristics);
-    }
-
     @Override
-    protected void initailize(CameraCharacteristics characteristics) {
+    public void initailize(CameraCharacteristics characteristics) {
         items.clear();
         Integer value = characteristics.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
         if (value != null && value == CameraMetadata.INFO_SUPPORTED_HARDWARE_LEVEL_FULL) {
@@ -41,7 +37,7 @@ public class ColorCorrectionMode extends CameraOption<Integer> {
 
     @Override
     public OptionType getOptionType() {
-        return OptionType.SELECT;
+        return OptionType.INTEGER_SELECT;
     }
 
     @Override

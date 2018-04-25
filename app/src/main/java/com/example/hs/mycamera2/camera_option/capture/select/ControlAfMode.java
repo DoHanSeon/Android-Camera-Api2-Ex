@@ -14,12 +14,9 @@ import com.example.hs.mycamera2.camera_option.capture.DetailOptionInfo;
 
 public class ControlAfMode extends CameraOption<Integer> {
 
-    public ControlAfMode(CameraCharacteristics characteristics) {
-        super(characteristics);
-    }
 
     @Override
-    protected void initailize(CameraCharacteristics characteristics) {
+    public void initailize(CameraCharacteristics characteristics) {
         items.clear();
         items.add(new DetailOptionInfo<>(CameraMetadata.CONTROL_AF_MODE_OFF, "OFF"));
         items.add(new DetailOptionInfo<>(CameraMetadata.CONTROL_AF_MODE_AUTO, "AUTO"));
@@ -41,7 +38,7 @@ public class ControlAfMode extends CameraOption<Integer> {
 
     @Override
     public OptionType getOptionType() {
-        return OptionType.SELECT;
+        return OptionType.INTEGER_SELECT;
     }
 
     @Override

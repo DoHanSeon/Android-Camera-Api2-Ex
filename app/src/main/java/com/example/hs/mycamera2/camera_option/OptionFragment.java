@@ -1,22 +1,15 @@
-package com.example.hs.mycamera2.option;
+package com.example.hs.mycamera2.camera_option;
 
-import android.content.Context;
-import android.hardware.camera2.CaptureRequest;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.hs.mycamera2.R;
 import com.example.hs.mycamera2.CameraSettingsView;
-import com.example.hs.mycamera2.camera_option.CameraOption;
-import com.example.hs.mycamera2.camera_option.CameraOptionManager;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -36,18 +29,17 @@ public class OptionFragment extends Fragment {
     @BindView(R.id.setting_view)
     CameraSettingsView cameraSettingsView;
 
+    public static OptionFragment createFragment(CameraSettingsView.OptionCallback optionCallback) {
+        OptionFragment fragment = new OptionFragment();
+        fragment.optionCallback = optionCallback;
+        return fragment;
+    }
+
 
     private Map<Integer, CameraOption>  cameraOptions;
 
     private CameraSettingsView.OptionCallback optionCallback;
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof CameraSettingsView.OptionCallback) {
-            optionCallback = (CameraSettingsView.OptionCallback) context;
-        }
-    }
 
     @Nullable
     @Override

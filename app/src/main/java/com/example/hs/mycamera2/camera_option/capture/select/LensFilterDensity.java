@@ -12,12 +12,9 @@ import com.example.hs.mycamera2.camera_option.capture.OptionType;
  */
 
 public class LensFilterDensity extends CameraOption<Float> {
-    public LensFilterDensity(CameraCharacteristics characteristics) {
-        super(characteristics);
-    }
 
     @Override
-    protected void initailize(CameraCharacteristics characteristics) {
+    public void initailize(CameraCharacteristics characteristics) {
         Integer hardwareLevel = characteristics.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
         if (hardwareLevel == null || hardwareLevel != CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_FULL) {
             return;
@@ -43,7 +40,7 @@ public class LensFilterDensity extends CameraOption<Float> {
 
     @Override
     public OptionType getOptionType() {
-        return OptionType.SELECT;
+        return OptionType.FLOAT_SELECT;
     }
 
     @Override

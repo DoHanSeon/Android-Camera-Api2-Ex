@@ -14,12 +14,9 @@ import com.example.hs.mycamera2.camera_option.capture.DetailOptionInfo;
 
 public class ControlEffectMode extends CameraOption<Integer> {
 
-    public ControlEffectMode(CameraCharacteristics characteristics) {
-        super(characteristics);
-    }
 
     @Override
-    protected void initailize(CameraCharacteristics characteristics) {
+    public void initailize(CameraCharacteristics characteristics) {
         items.clear();
         int[] values = characteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_EFFECTS);
         if (values != null && values.length > 0) {
@@ -69,7 +66,7 @@ public class ControlEffectMode extends CameraOption<Integer> {
 
     @Override
     public OptionType getOptionType() {
-        return OptionType.SELECT;
+        return OptionType.INTEGER_SELECT;
     }
 
     @Override

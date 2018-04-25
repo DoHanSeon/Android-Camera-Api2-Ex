@@ -1,4 +1,4 @@
-package com.example.hs.mycamera2.option;
+package com.example.hs.mycamera2.camera_option;
 
 /**
  * Created by user on 2018. 4. 17..

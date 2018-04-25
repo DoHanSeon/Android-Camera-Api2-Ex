@@ -1,6 +1,8 @@
 package com.example.hs.mycamera2.camera_option.capture.check;
 
+import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CaptureRequest;
 
 import com.example.hs.mycamera2.camera_option.CameraOption;
@@ -12,13 +14,8 @@ import com.example.hs.mycamera2.camera_option.capture.OptionType;
 
 public class ControlAwbLock extends CameraOption<Boolean> {
 
-    public ControlAwbLock(CameraCharacteristics characteristics) {
-        super(characteristics);
-    }
-
     @Override
-    protected void initailize(CameraCharacteristics characteristics) {
-
+    public void initailize(CameraCharacteristics characteristics) {
     }
 
     @Override

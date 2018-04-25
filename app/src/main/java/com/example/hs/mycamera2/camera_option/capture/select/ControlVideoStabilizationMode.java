@@ -14,12 +14,9 @@ import com.example.hs.mycamera2.camera_option.capture.DetailOptionInfo;
 
 public class ControlVideoStabilizationMode extends CameraOption<Integer> {
 
-    public ControlVideoStabilizationMode(CameraCharacteristics characteristics) {
-        super(characteristics);
-    }
 
     @Override
-    protected void initailize(CameraCharacteristics characteristics) {
+    public void initailize(CameraCharacteristics characteristics) {
         items.clear();
         items.add(new DetailOptionInfo<>(CameraMetadata.CONTROL_VIDEO_STABILIZATION_MODE_OFF, "OFF"));
         items.add(new DetailOptionInfo<>(CameraMetadata.CONTROL_VIDEO_STABILIZATION_MODE_ON, "ON"));
@@ -37,7 +34,7 @@ public class ControlVideoStabilizationMode extends CameraOption<Integer> {
 
     @Override
     public OptionType getOptionType() {
-        return OptionType.SELECT;
+        return OptionType.INTEGER_SELECT;
     }
 
     @Override

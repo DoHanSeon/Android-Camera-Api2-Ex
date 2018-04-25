@@ -17,12 +17,8 @@ import com.example.hs.mycamera2.camera_option.capture.DetailOptionInfo;
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class ControlPostRawSensitivityBoost extends CameraOption<Integer> {
 
-    public ControlPostRawSensitivityBoost(CameraCharacteristics characteristics) {
-        super(characteristics);
-    }
-
     @Override
-    protected void initailize(CameraCharacteristics characteristics) {
+    public void initailize(CameraCharacteristics characteristics) {
         Range<Integer> range = characteristics.get(CameraCharacteristics.CONTROL_POST_RAW_SENSITIVITY_BOOST_RANGE);
         if (range != null) {
             Integer lower = range.getLower();
@@ -32,8 +28,8 @@ public class ControlPostRawSensitivityBoost extends CameraOption<Integer> {
                 return;
             }
 
-            items.add(new DetailOptionInfo<>(lower, "LOWER"));
-            items.add(new DetailOptionInfo<>(upper, "UPPER"));
+            items.add(new DetailOptionInfo<>(lower, lower.intValue() + ""));
+            items.add(new DetailOptionInfo<>(upper, upper.intValue() + ""));
         }
     }
 
@@ -49,7 +45,7 @@ public class ControlPostRawSensitivityBoost extends CameraOption<Integer> {
 
     @Override
     public OptionType getOptionType() {
-        return OptionType.SLIDE;
+        return OptionType.INTEGER_SLIDE;
     }
 
     @Override

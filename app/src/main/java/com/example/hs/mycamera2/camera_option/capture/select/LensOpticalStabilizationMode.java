@@ -13,12 +13,9 @@ import com.example.hs.mycamera2.camera_option.capture.DetailOptionInfo;
  */
 
 public class LensOpticalStabilizationMode extends CameraOption<Integer> {
-    public LensOpticalStabilizationMode(CameraCharacteristics characteristics) {
-        super(characteristics);
-    }
 
     @Override
-    protected void initailize(CameraCharacteristics characteristics) {
+    public void initailize(CameraCharacteristics characteristics) {
         items.clear();
         Integer hardwareLevel = characteristics.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
         if (hardwareLevel != null && hardwareLevel == CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_LIMITED) {
@@ -51,7 +48,7 @@ public class LensOpticalStabilizationMode extends CameraOption<Integer> {
 
     @Override
     public OptionType getOptionType() {
-        return OptionType.SELECT;
+        return OptionType.INTEGER_SELECT;
     }
 
     @Override

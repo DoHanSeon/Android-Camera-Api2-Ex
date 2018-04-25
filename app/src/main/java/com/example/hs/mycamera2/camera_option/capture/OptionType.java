@@ -5,5 +5,11 @@ package com.example.hs.mycamera2.camera_option.capture;
  */
 
 public enum OptionType {
-    SELECT, CHECK, SETTING_VALUE, SLIDE
+    INTEGER_SELECT,
+    FLOAT_SELECT,
+    CHECK,
+    SETTING_VALUE,
+    INTEGER_SLIDE,
+    FLOAT_SLIDE,
+    LONG_SLIDE
 }

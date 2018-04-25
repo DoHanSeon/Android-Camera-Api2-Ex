@@ -16,12 +16,8 @@ public class LensFocusDistance extends CameraOption<Float> {
     private static final float MIN_VALUE = 0.0f;
     private static final float MAX_VALUE = 10.0f;
 
-    public LensFocusDistance(CameraCharacteristics characteristics) {
-        super(characteristics);
-    }
-
     @Override
-    protected void initailize(CameraCharacteristics characteristics) {
+    public void initailize(CameraCharacteristics characteristics) {
         Integer hardwareLevel = characteristics.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
         if (hardwareLevel == null || hardwareLevel != CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_FULL) {
             return;
@@ -44,7 +40,7 @@ public class LensFocusDistance extends CameraOption<Float> {
 
     @Override
     public OptionType getOptionType() {
-        return OptionType.SLIDE;
+        return OptionType.FLOAT_SLIDE;
     }
 
     @Override

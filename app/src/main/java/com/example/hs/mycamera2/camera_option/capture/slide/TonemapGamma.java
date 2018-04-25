@@ -16,12 +16,8 @@ public class TonemapGamma extends CameraOption<Float> {
     private static final float MIN_VALUE = 1.0f;
     private static final float MAX_VALUE = 5.0f;
 
-    public TonemapGamma(CameraCharacteristics characteristics) {
-        super(characteristics);
-    }
-
     @Override
-    protected void initailize(CameraCharacteristics characteristics) {
+    public void initailize(CameraCharacteristics characteristics) {
         items.clear();
         items.add(new DetailOptionInfo<>(MIN_VALUE, (String.valueOf(MIN_VALUE) + "(default)")));
         items.add(new DetailOptionInfo<>(MAX_VALUE, String.valueOf(MAX_VALUE)));
@@ -39,7 +35,7 @@ public class TonemapGamma extends CameraOption<Float> {
 
     @Override
     public OptionType getOptionType() {
-        return OptionType.SLIDE;
+        return OptionType.FLOAT_SLIDE;
     }
 
     @Override

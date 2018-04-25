@@ -13,12 +13,8 @@ import com.example.hs.mycamera2.camera_option.capture.DetailOptionInfo;
  */
 
 public class HotPixelMode extends CameraOption<Integer> {
-    public HotPixelMode(CameraCharacteristics characteristics) {
-        super(characteristics);
-    }
-
     @Override
-    protected void initailize(CameraCharacteristics characteristics) {
+    public void initailize(CameraCharacteristics characteristics) {
         items.clear();
         int[] values = characteristics.get(CameraCharacteristics.HOT_PIXEL_AVAILABLE_HOT_PIXEL_MODES);
         if (values != null && values.length > 0) {
@@ -50,7 +46,7 @@ public class HotPixelMode extends CameraOption<Integer> {
 
     @Override
     public OptionType getOptionType() {
-        return OptionType.SELECT;
+        return OptionType.INTEGER_SELECT;
     }
 
     @Override

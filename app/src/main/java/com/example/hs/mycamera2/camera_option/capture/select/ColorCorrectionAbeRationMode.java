@@ -14,13 +14,8 @@ import com.example.hs.mycamera2.camera_option.capture.DetailOptionInfo;
 
 public class ColorCorrectionAbeRationMode extends CameraOption<Integer> {
 
-
-    public ColorCorrectionAbeRationMode(CameraCharacteristics characteristics) {
-        super(characteristics);
-    }
-
     @Override
-    protected void initailize(CameraCharacteristics characteristics) {
+    public void initailize(CameraCharacteristics characteristics) {
         items.clear();
         int[] values = characteristics.get(CameraCharacteristics.COLOR_CORRECTION_AVAILABLE_ABERRATION_MODES);
         if (values != null && values.length > 0) {
@@ -52,7 +47,7 @@ public class ColorCorrectionAbeRationMode extends CameraOption<Integer> {
 
     @Override
     public OptionType getOptionType() {
-        return OptionType.SELECT;
+        return OptionType.INTEGER_SELECT;
     }
 
     @Override

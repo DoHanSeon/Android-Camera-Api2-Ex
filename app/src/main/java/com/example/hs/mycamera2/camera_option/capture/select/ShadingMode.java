@@ -13,12 +13,9 @@ import com.example.hs.mycamera2.camera_option.capture.DetailOptionInfo;
  */
 
 public class ShadingMode extends CameraOption<Integer> {
-    public ShadingMode(CameraCharacteristics characteristics) {
-        super(characteristics);
-    }
 
     @Override
-    protected void initailize(CameraCharacteristics characteristics) {
+    public void initailize(CameraCharacteristics characteristics) {
         Integer value = characteristics.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
         if (value != null && value == CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_FULL) {
             items.add(new DetailOptionInfo<>(CameraMetadata.SHADING_MODE_OFF, "OFF"));
@@ -39,7 +36,7 @@ public class ShadingMode extends CameraOption<Integer> {
 
     @Override
     public OptionType getOptionType() {
-        return OptionType.SELECT;
+        return OptionType.INTEGER_SELECT;
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.example.hs.mycamera2.camera_option;
 
+import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CaptureRequest;
 
 import com.example.hs.mycamera2.camera_option.capture.DetailOptionInfo;
@@ -17,15 +19,12 @@ public abstract class CameraOption<T> {
 
     protected List<DetailOptionInfo<T>> items = new ArrayList<>();
 
-    public CameraOption(CameraCharacteristics characteristics) {
-        initailize(characteristics);
-    }
-
-    protected abstract void initailize(CameraCharacteristics characteristics);
+    public abstract void initailize(CameraCharacteristics characteristics);
 
     public abstract CaptureRequest.Key<T> getKey();
     public abstract String getDisplayName();
     public abstract OptionType getOptionType();
+
 
     //location is asset folder
     public abstract String getDescriptionFilePath();

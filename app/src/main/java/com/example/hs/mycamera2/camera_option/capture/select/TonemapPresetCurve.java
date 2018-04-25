@@ -14,12 +14,9 @@ import com.example.hs.mycamera2.camera_option.capture.DetailOptionInfo;
 
 public class TonemapPresetCurve extends CameraOption<Integer> {
 
-    public TonemapPresetCurve(CameraCharacteristics characteristics) {
-        super(characteristics);
-    }
 
     @Override
-    protected void initailize(CameraCharacteristics characteristics) {
+    public void initailize(CameraCharacteristics characteristics) {
         items.add(new DetailOptionInfo<>(CameraMetadata.TONEMAP_PRESET_CURVE_SRGB, "SRGB"));
         items.add(new DetailOptionInfo<>(CameraMetadata.TONEMAP_PRESET_CURVE_REC709, "REC709"));
     }
@@ -36,7 +33,7 @@ public class TonemapPresetCurve extends CameraOption<Integer> {
 
     @Override
     public OptionType getOptionType() {
-        return OptionType.SELECT;
+        return OptionType.INTEGER_SELECT;
     }
 
     @Override

@@ -14,12 +14,8 @@ import com.example.hs.mycamera2.camera_option.capture.DetailOptionInfo;
 
 public class ControlSceneMode extends CameraOption<Integer> {
 
-    public ControlSceneMode(CameraCharacteristics characteristics) {
-        super(characteristics);
-    }
-
     @Override
-    protected void initailize(CameraCharacteristics characteristics) {
+    public void initailize(CameraCharacteristics characteristics) {
         items.clear();
         int[] values = characteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES);
         if (values != null && values.length > 0) {
@@ -99,7 +95,7 @@ public class ControlSceneMode extends CameraOption<Integer> {
 
     @Override
     public OptionType getOptionType() {
-        return OptionType.SELECT;
+        return OptionType.INTEGER_SELECT;
     }
 
     @Override

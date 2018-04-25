@@ -14,12 +14,9 @@ import com.example.hs.mycamera2.camera_option.capture.DetailOptionInfo;
 
 public class ControlAeMode extends CameraOption<Integer> {
 
-    public ControlAeMode(CameraCharacteristics characteristics) {
-        super(characteristics);
-    }
 
     @Override
-    protected void initailize(CameraCharacteristics characteristics) {
+    public void initailize(CameraCharacteristics characteristics) {
         items.clear();
         int[] values = characteristics.get(CameraCharacteristics.CONTROL_AE_AVAILABLE_MODES);
         if (values != null && values.length > 0) {
@@ -57,7 +54,7 @@ public class ControlAeMode extends CameraOption<Integer> {
 
     @Override
     public OptionType getOptionType() {
-        return OptionType.SELECT;
+        return OptionType.INTEGER_SELECT;
     }
 
     @Override

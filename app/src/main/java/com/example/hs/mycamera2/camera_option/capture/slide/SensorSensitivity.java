@@ -13,12 +13,9 @@ import com.example.hs.mycamera2.camera_option.capture.OptionType;
  */
 
 public class SensorSensitivity extends CameraOption<Integer> {
-    public SensorSensitivity(CameraCharacteristics characteristics) {
-        super(characteristics);
-    }
 
     @Override
-    protected void initailize(CameraCharacteristics characteristics) {
+    public void initailize(CameraCharacteristics characteristics) {
         Integer hardwareLevel = characteristics.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
         if (hardwareLevel == null || hardwareLevel != CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_FULL) {
             return;
@@ -33,8 +30,8 @@ public class SensorSensitivity extends CameraOption<Integer> {
                 return;
             }
 
-            items.add(new DetailOptionInfo<>(lower, "LOWER"));
-            items.add(new DetailOptionInfo<>(upper, "UPPER"));
+            items.add(new DetailOptionInfo<>(lower, lower.intValue() + ""));
+            items.add(new DetailOptionInfo<>(upper, upper.intValue() + ""));
         }
     }
 
@@ -50,7 +47,7 @@ public class SensorSensitivity extends CameraOption<Integer> {
 
     @Override
     public OptionType getOptionType() {
-        return OptionType.SLIDE;
+        return OptionType.INTEGER_SLIDE;
     }
 
     @Override

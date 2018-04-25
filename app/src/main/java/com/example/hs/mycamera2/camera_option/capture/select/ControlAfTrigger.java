@@ -14,12 +14,9 @@ import com.example.hs.mycamera2.camera_option.capture.DetailOptionInfo;
 
 public class ControlAfTrigger extends CameraOption<Integer> {
 
-    public ControlAfTrigger(CameraCharacteristics characteristics) {
-        super(characteristics);
-    }
 
     @Override
-    protected void initailize(CameraCharacteristics characteristics) {
+    public void initailize(CameraCharacteristics characteristics) {
         items.clear();
         items.add(new DetailOptionInfo<>(CameraMetadata.CONTROL_AF_TRIGGER_IDLE, "IDLE"));
         items.add(new DetailOptionInfo<>(CameraMetadata.CONTROL_AF_TRIGGER_START, "START"));
@@ -38,7 +35,7 @@ public class ControlAfTrigger extends CameraOption<Integer> {
 
     @Override
     public OptionType getOptionType() {
-        return OptionType.SELECT;
+        return OptionType.INTEGER_SELECT;
     }
 
     @Override

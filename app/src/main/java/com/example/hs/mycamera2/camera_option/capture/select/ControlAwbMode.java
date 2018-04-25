@@ -14,12 +14,8 @@ import com.example.hs.mycamera2.camera_option.capture.DetailOptionInfo;
 
 public class ControlAwbMode extends CameraOption<Integer> {
 
-    public ControlAwbMode(CameraCharacteristics characteristics) {
-        super(characteristics);
-    }
-
     @Override
-    protected void initailize(CameraCharacteristics characteristics) {
+    public void initailize(CameraCharacteristics characteristics) {
         items.clear();
         int[] values = characteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES);
         if (values != null && values.length > 0) {
@@ -69,7 +65,7 @@ public class ControlAwbMode extends CameraOption<Integer> {
 
     @Override
     public OptionType getOptionType() {
-        return OptionType.SELECT;
+        return OptionType.INTEGER_SELECT;
     }
 
     @Override

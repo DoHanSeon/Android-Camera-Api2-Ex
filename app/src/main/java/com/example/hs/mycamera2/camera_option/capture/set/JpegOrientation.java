@@ -12,12 +12,9 @@ import com.example.hs.mycamera2.camera_option.capture.DetailOptionInfo;
  */
 
 public class JpegOrientation extends CameraOption<Integer> {
-    public JpegOrientation(CameraCharacteristics characteristics) {
-        super(characteristics);
-    }
 
     @Override
-    protected void initailize(CameraCharacteristics characteristics) {
+    public void initailize(CameraCharacteristics characteristics) {
         items.add(new DetailOptionInfo<>(0, "ROTATION 90"));
         items.add(new DetailOptionInfo<>(90, "ROTATION 0"));
         items.add(new DetailOptionInfo<>(180, "ROTATION 270"));

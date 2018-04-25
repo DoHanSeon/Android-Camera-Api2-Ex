@@ -13,12 +13,9 @@ import com.example.hs.mycamera2.camera_option.capture.OptionType;
 
 public class LensFocalLength extends CameraOption<Float> {
 
-    public LensFocalLength(CameraCharacteristics characteristics) {
-        super(characteristics);
-    }
 
     @Override
-    protected void initailize(CameraCharacteristics characteristics) {
+    public void initailize(CameraCharacteristics characteristics) {
         items.clear();
         float[] values = characteristics.get(CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS);
         if (values != null) {
@@ -40,7 +37,7 @@ public class LensFocalLength extends CameraOption<Float> {
 
     @Override
     public OptionType getOptionType() {
-        return OptionType.SELECT;
+        return OptionType.FLOAT_SELECT;
     }
 
     @Override

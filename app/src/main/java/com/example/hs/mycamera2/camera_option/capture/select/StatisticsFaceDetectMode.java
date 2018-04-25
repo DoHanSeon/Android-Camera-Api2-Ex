@@ -13,12 +13,10 @@ import com.example.hs.mycamera2.camera_option.capture.DetailOptionInfo;
  */
 
 public class StatisticsFaceDetectMode extends CameraOption<Integer> {
-    public StatisticsFaceDetectMode(CameraCharacteristics characteristics) {
-        super(characteristics);
-    }
+
 
     @Override
-    protected void initailize(CameraCharacteristics characteristics) {
+    public void initailize(CameraCharacteristics characteristics) {
         int[] values = characteristics.get(CameraCharacteristics.STATISTICS_INFO_AVAILABLE_FACE_DETECT_MODES);
         if (values != null && values.length > 0) {
             for (int value : values) {
@@ -49,7 +47,7 @@ public class StatisticsFaceDetectMode extends CameraOption<Integer> {
 
     @Override
     public OptionType getOptionType() {
-        return OptionType.SELECT;
+        return OptionType.INTEGER_SELECT;
     }
 
     @Override

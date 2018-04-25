@@ -1,6 +1,8 @@
 package com.example.hs.mycamera2.camera_option.capture.check;
 
+import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CaptureRequest;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -15,13 +17,8 @@ import com.example.hs.mycamera2.camera_option.capture.OptionType;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class ControlEnableZsl extends CameraOption<Boolean> {
 
-    public ControlEnableZsl(CameraCharacteristics characteristics) {
-        super(characteristics);
-    }
-
     @Override
-    protected void initailize(CameraCharacteristics characteristics) {
-
+    public void initailize(CameraCharacteristics characteristics) {
     }
 
     @Override
