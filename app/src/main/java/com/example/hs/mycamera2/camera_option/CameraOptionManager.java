@@ -118,8 +118,8 @@ public class CameraOptionManager {
         option = new ControlAeLock();
         allCaptureOption.put(option.getKey().hashCode(), option);
         option = new ControlAwbLock();
-        allCaptureOption.put(option.getKey().hashCode(), option);
-        option = new ControlEnableZsl();
+//        allCaptureOption.put(option.getKey().hashCode(), option);
+//        option = new ControlEnableZsl();
         allCaptureOption.put(option.getKey().hashCode(), option);
         option = new StatisticsHotPixelMapMode();
         allCaptureOption.put(option.getKey().hashCode(), option);

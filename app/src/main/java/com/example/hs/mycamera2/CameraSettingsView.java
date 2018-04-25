@@ -159,7 +159,13 @@ public class CameraSettingsView extends ScrollView {
         View view = createSlideView(items, displayName, new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                optionCallback.onChangeSlideOption(key, progress);
+
+                int min = items.get(0).getValue();
+                int max = items.get(1).getValue();
+
+                int adjustValue = (int) (((max - min) * ((float)progress / max)) + min);
+
+                optionCallback.onChangeSlideOption(key, adjustValue);
             }
 
             @Override
@@ -185,7 +191,12 @@ public class CameraSettingsView extends ScrollView {
         View view = createSlideView(items, displayName, new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                optionCallback.onChangeSlideOption(key, (float) progress);
+                float min = items.get(0).getValue();
+                float max = items.get(1).getValue();
+
+                float adjustValue = (((max - min) * ((float)progress / max)) + min);
+
+                optionCallback.onChangeSlideOption(key, adjustValue);
             }
 
             @Override
@@ -302,10 +313,8 @@ public class CameraSettingsView extends ScrollView {
         }
 
         if (minValue.getValue() instanceof Long) {
-            seekBar.setMin(0);
             seekBar.setMax(100);
         } else {
-            seekBar.setMin(minValue.getValue().intValue());
             seekBar.setMax(maxValue.getValue().intValue());
         }
         if (defaultValue != null) {
@@ -372,12 +381,6 @@ public class CameraSettingsView extends ScrollView {
 
 
 
-
-
-
-
-
-
     public interface OptionCallback {
         void onChangeCheckOption(CaptureRequest.Key<Boolean> key, boolean isChecked);
         void onChangeSelectOption(CaptureRequest.Key<Integer> key, int option);
@@ -389,319 +392,6 @@ public class CameraSettingsView extends ScrollView {
 
         Object getCurrentValue(CaptureRequest.Key<Object> key);
     }
-
-
-
-
-    /*
-
-    private void initCheckOptionView(CaptureRequest.Key<Boolean> key, String displayName) {
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        int margin = (int) ScreenUtil.dpToPixel(5f);
-        lp.setMargins(margin, margin, margin, margin);
-        LinearLayout parent = new LinearLayout(context);
-        parent.setOrientation(LinearLayout.HORIZONTAL);
-        rootView.addView(parent, lp);
-
-
-        lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.weight = 3;
-        lp.gravity = Gravity.CENTER_VERTICAL | Gravity.LEFT;
-
-        TextView title = new TextView(context);
-        title.setText(displayName);
-        title.setTextColor(Color.parseColor("#ffffff"));
-        title.setTextSize(ScreenUtil.dpToPixel(7f));
-        parent.addView(title, lp);
-
-
-        lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.weight = 1;
-        lp.gravity = Gravity.CENTER;
-
-        CheckBox checkBox = new CheckBox(context);
-        parent.addView(checkBox, lp);
-        checkBox.setOnCheckedChangeListener((view, isChecked) -> optionCallback.onChangeCheckOption(key, isChecked));
-    }
-
-    private void initSelectOptionView(CaptureRequest.Key<Number> key, List<DetailOptionInfo<Number>> detailOptionInfos, String displayName) {
-        if (detailOptionInfos.size() == 0) {
-            Log.d("hanseon--", "initSelectOptionView child size is 0 -> return : " + key.getName());
-            return;
-        }
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        int margin = (int) ScreenUtil.dpToPixel(5f);
-        lp.setMargins(margin, margin, margin, margin);
-        LinearLayout parent = new LinearLayout(context);
-        parent.setOrientation(LinearLayout.VERTICAL);
-        rootView.addView(parent, lp);
-
-        lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.gravity = Gravity.CENTER_VERTICAL | Gravity.LEFT;
-
-        TextView title = new TextView(context);
-        title.setText(displayName);
-        title.setTextColor(Color.parseColor("#ffffff"));
-        title.setTextSize(ScreenUtil.dpToPixel(7f));
-        parent.addView(title, lp);
-
-        RadioGroup radioGroup = new RadioGroup(context);
-        for (int i=0; i<detailOptionInfos.size(); i++) {
-            RadioButton button = new RadioButton(context);
-            DetailOptionInfo info = detailOptionInfos.get(i);
-            button.setId(i);
-            button.setTag(info.getValue());
-            button.setText(info.getDisplayName());
-            radioGroup.addView(button);
-        }
-
-        radioGroup.setOnCheckedChangeListener((group, id) -> {
-            Object value = group.findViewById(id).getTag();
-            if (value instanceof Integer) {
-                optionCallback.onChangeSelectOption(key, value);
-            }
-            optionCallback.onChangeSelectOption(key, (Number) value);
-        });
-        parent.addView(radioGroup);
-    }
-
-    private <T> void initSlideOptionView(CaptureRequest.Key<Number> key, List<DetailOptionInfo<Number>> detailOptionInfos, String displayName) {
-        if (detailOptionInfos.size() != 2) {
-            Log.d("hanseon--", "initSlideOptionView child size is 0 -> return : " + key.getName());
-            return;
-        }
-
-        DetailOptionInfo<Number> minValue = detailOptionInfos.get(0);
-        DetailOptionInfo<Number> maxValue = detailOptionInfos.get(1);
-
-        Type type = null;
-        if (minValue.getValue() instanceof Integer) {
-            type = Type.INTEGER;
-        } else if(minValue.getValue() instanceof Float) {
-            type = Type.FLOAT;
-        } else if (minValue.getValue() instanceof Long) {
-            type = Type.LONG;
-        }
-
-        if (type == null) {
-            return;
-        }
-
-
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        LinearLayout parent = new LinearLayout(context);
-        parent.setOrientation(LinearLayout.VERTICAL);
-        rootView.addView(parent, lp);
-
-        //title (min value, max value)
-        LinearLayout titleLayout = new LinearLayout(context);
-        titleLayout.setOrientation(LinearLayout.HORIZONTAL);
-        titleLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-        lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.gravity = Gravity.LEFT;
-        TextView minTextView = new TextView(context);
-        minTextView.setTextColor(Color.WHITE);
-        minTextView.setText(minValue.getDisplayName());
-        minTextView.setLayoutParams(lp);
-
-        lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.gravity = Gravity.RIGHT;
-        TextView maxTextView = new TextView(context);
-        maxTextView.setTextColor(Color.WHITE);
-        maxTextView.setText(maxValue.getDisplayName());
-        maxTextView.setLayoutParams(lp);
-
-        titleLayout.addView(minTextView);
-        titleLayout.addView(maxTextView);
-
-        parent.addView(titleLayout);
-
-        //seekbar
-        SeekBar seekBar = null;
-        if (minValue.getValue() instanceof Float) {
-            seekBar = new FloatSeekBar(context);
-        } else {
-            seekBar = new SeekBar(context);
-        }
-        seekBar.setMin(minValue.getValue().intValue());
-        seekBar.setMax(maxValue.getValue().intValue());
-        seekBar.setProgress(minValue.getValue().intValue());
-
-        parent.addView(seekBar);
-
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                optionCallback.onChangeSlideOption(key, progress);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-    }
-
-
-//    public void initView(List<CameraOption> cameraOptions) {
-//        for (CameraOption option : cameraOptions) {
-//            View view = null;
-//            switch (option.getOptionType()) {
-//                case CHECK:
-//                    break;
-//                case SELECT:
-//                    view = createSelectOptionView(option);
-//                    break;
-//                case SETTING_VALUE:
-//                    break;
-//                case SLIDE:
-//                    break;
-//            }
-//
-//            rootView.addView(view, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//        }
-//    }
-//
-//    private View createSelectOptionView(CameraOption option) {
-//
-//        LinearLayout rootView = new LinearLayout(context);
-//        rootView.setOrientation(LinearLayout.VERTICAL);
-//
-//
-//        CameraDetailOption detailOption = option.getDetailOption();
-//
-//        TextView textView = new TextView(context);
-//        textView.setText(option.getDisplayName());
-//
-//        RadioGroup group = new RadioGroup(context);
-//        for (DetailOptionInfo info : detailOption.getDetailOptionInfos()) {
-//            RadioButton button = new RadioButton(context);
-//            button.setId((Integer) info.getValue());
-//            button.setTag(info.getValue());
-//            button.setText(info.getDisplayName());
-//            group.addView(button);
-//        }
-//
-//        group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(RadioGroup group, int checkedId) {
-//                View view = group.findViewById(checkedId);
-//            }
-//        });
-//
-//
-//
-//        rootView.addView(textView, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//        rootView.addView(group, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//
-//        return rootView;
-//    }
-
-
-    private enum Type {
-        INTEGER, FLOAT, LONG;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private void initUi(Context context) {
-        setBackgroundColor(Color.WHITE);
-
-        LinearLayout rootView = new LinearLayout(context);
-        rootView.setOrientation(LinearLayout.VERTICAL);
-        FrameLayout.LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        rootView.setLayoutParams(lp);
-
-        //add childOption
-        for (CameraAllOption.Subject subject : CameraAllOption.Subject.values()) {
-            LinearLayout parent = new LinearLayout(context);
-            parent.setOrientation(LinearLayout.HORIZONTAL);
-
-            LinearLayout titleViewGroup = new LinearLayout(context);
-            LinearLayout.LayoutParams titleViewGroupLp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 3);
-            titleViewGroup.setOrientation(LinearLayout.VERTICAL);
-            titleViewGroup.setLayoutParams(titleViewGroupLp);
-            {
-                LinearLayout.LayoutParams titleLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                titleLp.setMargins((int) ScreenUtil.dpToPixel(5), (int) ScreenUtil.dpToPixel(5), (int) ScreenUtil.dpToPixel(5), (int) ScreenUtil.dpToPixel(5));
-                TextView title = new TextView(context);
-                title.setText(subject.name());
-                title.setTextColor(Color.parseColor("#222222"));
-                title.setTextSize(ScreenUtil.dpToPixel(7f));
-                title.setLayoutParams(titleLp);
-
-                LinearLayout.LayoutParams descLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                descLp.setMargins((int) ScreenUtil.dpToPixel(10f), 0, 0, 0);
-                TextView desc = new TextView(context);
-                desc.setText(subject.getDescription());
-                desc.setTextColor(Color.parseColor("#aaaaaa"));
-                desc.setTextSize((int) ScreenUtil.dpToPixel(5f));
-                desc.setLayoutParams(descLp);
-
-                titleViewGroup.addView(title);
-                titleViewGroup.addView(desc);
-            }
-
-            LinearLayout.LayoutParams buttonViewGroupLp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1);
-            FrameLayout buttonGroup = new FrameLayout(context);
-            buttonGroup.setLayoutParams(buttonViewGroupLp);
-            {
-                TextView button = null;
-                switch (subject.getType()) {
-                    case CHECK:
-                        button = new CheckBox(context);
-                        button.setText("checkbox");
-                        break;
-                    default:
-                        button = new TextView(context);
-                        button.setText("empty");
-                }
-                if (button != null) {
-                    button.setTextColor(Color.parseColor("#000000"));
-                    button.setTag(subject);
-                    button.setOnClickListener(this);
-                    FrameLayout.LayoutParams buttonLp = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    buttonLp.gravity = Gravity.CENTER;
-                    buttonGroup.addView(button, buttonLp);
-                }
-            }
-
-            parent.addView(titleViewGroup);
-            parent.addView(buttonGroup);
-            rootView.addView(parent, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-            View divider = new View(context);
-            divider.setBackgroundColor(Color.parseColor("#7daaaaaa"));
-            LinearLayout.LayoutParams dividerLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) ScreenUtil.dpToPixel(0.5f));
-            dividerLp.setMargins(0, (int) ScreenUtil.dpToPixel(3f), 0, 0);
-            rootView.addView(divider, dividerLp);
-        }
-        addView(rootView);
-    }
-
-    @Override
-    public void onClick(View v) {
-
-    }
-    */
 
 
 }
