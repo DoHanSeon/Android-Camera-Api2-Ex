@@ -32,7 +32,9 @@ import android.util.SparseIntArray;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hs.mycamera2.camera_option.CameraOptionManager;
@@ -61,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
     private Button btnCapture;
     private TextureView textureView;
     private View optionFragmentView;
+
+    private ViewGroup infoArea;
+    private TextView infoTextView;
 
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
 
@@ -143,13 +148,20 @@ public class MainActivity extends AppCompatActivity {
 
         optionFragmentView = findViewById(R.id.option_fragment_view);
 
+        infoArea = findViewById(R.id.camera_info_layout);
+        infoTextView = findViewById(R.id.txt_info);
+
         findViewById(R.id.btnOption).setOnClickListener(v -> {
-            Log.d("hanseon--", "camera option click");
             if (!cameraOptionInitSuccess) {
                 Toast.makeText(MainActivity.this, "아직 카메라 옵션 초기화 안됨", Toast.LENGTH_SHORT).show();
                 return;
             }
             showOptionFragment();
+        });
+
+        findViewById(R.id.btnInfo).setOnClickListener(v -> {
+            boolean infoViewVisible = infoArea.getVisibility() == View.VISIBLE;
+            infoArea.setVisibility(infoViewVisible ? View.GONE : View.VISIBLE);
         });
     }
 
@@ -207,11 +219,6 @@ public class MainActivity extends AppCompatActivity {
             for (CaptureRequest.Key key : applyedOptions.keySet()) {
                 captureBuilder.set(key, applyedOptions.get(key));
             }
-
-//            captureBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
-//            captureBuilder.set();
-
-
 
             int rotation = getWindowManager().getDefaultDisplay().getRotation();
             captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS.get(rotation));

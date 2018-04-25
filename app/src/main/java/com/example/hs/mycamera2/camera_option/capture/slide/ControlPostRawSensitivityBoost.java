@@ -40,7 +40,7 @@ public class ControlPostRawSensitivityBoost extends CameraOption<Integer> {
 
     @Override
     public String getDisplayName() {
-        return "RAW 센서 데이터를 캡처 한 후 출력 이미지에 적용되는 추가 감도 증가량입니다.";
+        return "ISO\nRAW 센서 데이터를 캡처 한 후 출력 이미지에 적용되는 추가 감도 증가량입니다.";
     }
 
     @Override
