@@ -17,12 +17,12 @@ public class ColorCorrectionMode extends CameraOption<Integer> {
     @Override
     public void initailize(CameraCharacteristics characteristics) {
         items.clear();
-        Integer value = characteristics.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
-        if (value != null && value == CameraMetadata.INFO_SUPPORTED_HARDWARE_LEVEL_FULL) {
+//        Integer value = characteristics.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
+//        if (value != null && value == CameraMetadata.INFO_SUPPORTED_HARDWARE_LEVEL_FULL) {
             items.add(new DetailOptionInfo<>(CameraMetadata.COLOR_CORRECTION_MODE_TRANSFORM_MATRIX, "TRANSFORM MATRIX"));
             items.add(new DetailOptionInfo<>(CameraMetadata.COLOR_CORRECTION_MODE_FAST, "FAST"));
             items.add(new DetailOptionInfo<>(CameraMetadata.COLOR_CORRECTION_MODE_HIGH_QUALITY, "HIGH QUALITY"));
-        }
+//        }
     }
 
     @Override

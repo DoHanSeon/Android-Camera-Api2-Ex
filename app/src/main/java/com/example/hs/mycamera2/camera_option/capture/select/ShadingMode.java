@@ -16,12 +16,12 @@ public class ShadingMode extends CameraOption<Integer> {
 
     @Override
     public void initailize(CameraCharacteristics characteristics) {
-        Integer value = characteristics.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
-        if (value != null && value == CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_FULL) {
+//        Integer value = characteristics.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
+//        if (value != null && value == CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_FULL) {
             items.add(new DetailOptionInfo<>(CameraMetadata.SHADING_MODE_OFF, "OFF"));
             items.add(new DetailOptionInfo<>(CameraMetadata.SHADING_MODE_FAST, "FAST"));
             items.add(new DetailOptionInfo<>(CameraMetadata.SHADING_MODE_HIGH_QUALITY, "HIGH QUALITY"));
-        }
+//        }
     }
 
     @Override

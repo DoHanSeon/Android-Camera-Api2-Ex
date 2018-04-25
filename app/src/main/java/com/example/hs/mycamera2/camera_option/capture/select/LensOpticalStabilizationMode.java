@@ -17,8 +17,8 @@ public class LensOpticalStabilizationMode extends CameraOption<Integer> {
     @Override
     public void initailize(CameraCharacteristics characteristics) {
         items.clear();
-        Integer hardwareLevel = characteristics.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
-        if (hardwareLevel != null && hardwareLevel == CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_LIMITED) {
+//        Integer hardwareLevel = characteristics.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
+//        if (hardwareLevel != null && hardwareLevel == CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_LIMITED) {
             int[] values = characteristics.get(CameraCharacteristics.LENS_INFO_AVAILABLE_OPTICAL_STABILIZATION);
             if (values != null && values.length > 0) {
                 for (int value : values) {
@@ -33,7 +33,7 @@ public class LensOpticalStabilizationMode extends CameraOption<Integer> {
                 }
 
             }
-        }
+//        }
     }
 
     @Override

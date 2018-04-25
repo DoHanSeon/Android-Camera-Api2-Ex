@@ -19,12 +19,12 @@ public class ControlAePrecaptureTrigger extends CameraOption<Integer> {
     @Override
     public void initailize(CameraCharacteristics characteristics) {
         items.clear();
-        Integer value = characteristics.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
-        if (value != null && value == CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_LIMITED) {
+//        Integer value = characteristics.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
+//        if (value != null && value == CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_LIMITED) {
             items.add(new DetailOptionInfo<>(CameraMetadata.CONTROL_AE_PRECAPTURE_TRIGGER_IDLE, "IDLE"));
             items.add(new DetailOptionInfo<>(CameraMetadata.CONTROL_AE_PRECAPTURE_TRIGGER_START, "START"));
             items.add(new DetailOptionInfo<>(CameraMetadata.CONTROL_AE_PRECAPTURE_TRIGGER_CANCEL, "CANCEL"));
-        }
+//        }
     }
 
     @Override

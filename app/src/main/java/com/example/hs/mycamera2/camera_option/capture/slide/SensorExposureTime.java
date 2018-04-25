@@ -17,10 +17,10 @@ public class SensorExposureTime extends CameraOption<Long> {
 
     @Override
     public void initailize(CameraCharacteristics characteristics) {
-        Integer hardwareLevel = characteristics.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
-        if (hardwareLevel == null || hardwareLevel != CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_FULL) {
-            return;
-        }
+//        Integer hardwareLevel = characteristics.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
+//        if (hardwareLevel == null || hardwareLevel != CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_FULL) {
+//            return;
+//        }
 
         Range<Long> range = characteristics.get(CameraCharacteristics.SENSOR_INFO_EXPOSURE_TIME_RANGE);
         if (range != null) {
@@ -31,8 +31,8 @@ public class SensorExposureTime extends CameraOption<Long> {
                 return;
             }
 
-        items.add(new DetailOptionInfo<>(lower, lower.intValue() + ""));
-        items.add(new DetailOptionInfo<>(upper, upper.intValue() + ""));
+        items.add(new DetailOptionInfo<>(lower, lower.longValue() + ""));
+        items.add(new DetailOptionInfo<>(upper, upper.longValue() + ""));
         }
     }
 

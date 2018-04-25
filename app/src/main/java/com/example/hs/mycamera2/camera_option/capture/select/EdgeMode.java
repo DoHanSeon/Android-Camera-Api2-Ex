@@ -17,10 +17,10 @@ public class EdgeMode extends CameraOption<Integer> {
 
     @Override
     public void initailize(CameraCharacteristics characteristics) {
-        Integer hardwareLevel = characteristics.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
-        if (hardwareLevel == null || hardwareLevel != CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_FULL) {
-            return;
-        }
+//        Integer hardwareLevel = characteristics.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
+//        if (hardwareLevel == null || hardwareLevel != CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_FULL) {
+//            return;
+//        }
 
         items.clear();
         int[] values = characteristics.get(CameraCharacteristics.EDGE_AVAILABLE_EDGE_MODES);

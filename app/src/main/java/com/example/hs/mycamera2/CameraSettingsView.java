@@ -211,7 +211,13 @@ public class CameraSettingsView extends ScrollView {
         View view = createSlideView(items, displayName, new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                optionCallback.onChangeSlideOption(key, (long) progress);
+
+                long min = items.get(0).getValue();
+                long max = items.get(1).getValue();
+
+                long adjustValue = (long) (((max - min) * ((float)progress / 100f)) + min);
+
+                optionCallback.onChangeSlideOption(key, adjustValue);
             }
 
             @Override
@@ -258,7 +264,7 @@ public class CameraSettingsView extends ScrollView {
         titleLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.weight = 1;
+        lp.weight = 2;
         TextView minTextView = new TextView(context);
         minTextView.setGravity(Gravity.LEFT);
         minTextView.setTextColor(Color.WHITE);
@@ -274,7 +280,7 @@ public class CameraSettingsView extends ScrollView {
         title.setLayoutParams(lp);
 
         lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.weight = 1;
+        lp.weight = 2;
         TextView maxTextView = new TextView(context);
         maxTextView.setGravity(Gravity.RIGHT);
         maxTextView.setTextColor(Color.WHITE);
@@ -294,8 +300,14 @@ public class CameraSettingsView extends ScrollView {
         } else {
             seekBar = new SeekBar(context);
         }
-        seekBar.setMin(minValue.getValue().intValue());
-        seekBar.setMax(maxValue.getValue().intValue());
+
+        if (minValue.getValue() instanceof Long) {
+            seekBar.setMin(0);
+            seekBar.setMax(100);
+        } else {
+            seekBar.setMin(minValue.getValue().intValue());
+            seekBar.setMax(maxValue.getValue().intValue());
+        }
         if (defaultValue != null) {
             seekBar.setProgress(defaultValue.intValue());
         }

@@ -18,10 +18,10 @@ public class LensFocusDistance extends CameraOption<Float> {
 
     @Override
     public void initailize(CameraCharacteristics characteristics) {
-        Integer hardwareLevel = characteristics.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
-        if (hardwareLevel == null || hardwareLevel != CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_FULL) {
-            return;
-        }
+//        Integer hardwareLevel = characteristics.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
+//        if (hardwareLevel == null || hardwareLevel != CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_FULL) {
+//            return;
+//        }
         items.clear();
         items.add(new DetailOptionInfo<>(MIN_VALUE, (String.valueOf(MIN_VALUE) + "(default)")));
         items.add(new DetailOptionInfo<>(MAX_VALUE, String.valueOf(MAX_VALUE)));
